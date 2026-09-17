@@ -1,87 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Life Voice Chat</title>
+
+<script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;color:white;text-align:center;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(135deg,#12002b,#301080,#09001c);
+}
+header{padding:35px 15px 20px}
+.logo{font-size:60px}
+h1{font-size:38px;margin:8px}
+.sub{font-size:18px;color:#ddd}
+.card{
+ width:90%;max-width:430px;margin:25px auto;padding:25px;
+ background:#ffffff18;border:1px solid #ffffff30;
+ border-radius:25px;box-shadow:0 15px 40px #0008;
+}
+h2{margin-top:0}
+input,button{
+ width:100%;padding:16px;margin-top:12px;
+ border:0;border-radius:15px;font-size:17px
+}
+input{outline:0}
+button{font-weight:bold;color:white;background:linear-gradient(90deg,#315cff,#d000ff)}
+.mic{background:linear-gradient(90deg,#00bfa5,#00d94f)}
+.red{background:linear-gradient(90deg,#ff1744,#ff6d00)}
+.orange{background:linear-gradient(90deg,#ff9800,#ff1744)}
+.status{margin-top:18px;color:#5fffcf}
+.info{margin-top:10px;color:#bbb;font-size:13px}
+.hidden{display:none}
+.features{display:flex;justify-content:space-around;margin:30px 10px}
+.feature span{display:block;font-size:35px}
+.feature{color:#ddd}
 </style>
 </head>
 
 <body>
 
-<div class="header">
-  <div class="logo">🎙️</div>
-  <h1>Life Voice Chat</h1>
-  <div class="subtitle">Connect • Talk • Enjoy</div>
-</div>
+<header>
+<div class="logo">🎙️</div>
+<h1>Life Voice Chat</h1>
+<div class="sub">Connect • Talk • Enjoy</div>
+</header>
 
 <div class="card">
+<h2>Join Voice Room</h2>
 
-  <h2>Join Voice Room</h2>
+<input id="name" placeholder="Enter your name">
+<input id="room" placeholder="Enter Room ID">
 
-  <input id="name" type="text" placeholder="Enter your name">
+<button onclick="join()">🚪 Join Room</button>
+<button class="mic" onclick="mic()">🎤 Test Microphone</button>
 
-  <input id="room" type="text" placeholder="Enter Room ID">
+<button id="mute" class="orange hidden" onclick="toggleMute()">🔇 Mute</button>
+<button id="leave" class="red hidden" onclick="leave()">🔴 Leave Room</button>
 
-  <button onclick="joinRoom()">🚪 Join Room</button>
-
-  <button class="mic" onclick="testMic()">🎤 Test Microphone</button>
-
-  <div class="status" id="status">
-    Ready to connect
-  </div>
-
+<div id="status" class="status">Ready to connect</div>
+<div id="info" class="info"></div>
 </div>
 
 <div class="features">
-  <div class="feature">
-    <div>👥</div>
-    Voice Rooms
-  </div>
-
-  <div class="feature">
-    <div>🎤</div>
-    Live Voice
-  </div>
-
-  <div class="feature">
-    <div>💬</div>
-    Chat
-  </div>
+<div class="feature"><span>👥</span>Voice Rooms</div>
+<div class="feature"><span>🎤</span>Live Voice</div>
+<div class="feature"><span>💬</span>Chat</div>
 </div>
 
 <script>
+let peer,stream,call,muted=false;
 
-function joinRoom(){
+const status=document.getElementById("status");
+const info=document.getElementById("info");
+const muteBtn=document.getElementById("mute");
+const leaveBtn=document.getElementById("leave");
 
-  let name=document.getElementById("name").value.trim();
-  let room=document.getElementById("room").value.trim();
+function msg(x){status.textContent=x}
 
-  if(name==="" || room===""){
-    document.getElementById("status").innerText=
-    "⚠️ Please enter your name and Room ID";
-    return;
-  }
-
-  document.getElementById("status").innerText=
-  "✅ Welcome "+name+" • Room "+room;
-
+async function getMic(){
+ if(stream)return stream;
+ stream=await navigator.mediaDevices.getUserMedia({audio:true});
+ return stream;
 }
 
-async function testMic(){
-
-  try{
-
-    await navigator.mediaDevices.getUserMedia({
-      audio:true
-    });
-
-    document.getElementById("status").innerText=
-    "🎤 Microphone permission granted";
-
-  }catch(error){
-
-    document.getElementById("status").innerText=
-    "❌ Microphone permission denied";
-
-  }
-
+async function mic(){
+ try{
+  await getMic();
+  msg("🎤 Microphone permission granted");
+ }catch(e){
+  msg("❌ Microphone permission denied");
+ }
 }
 
+function roomId(){
+ let r=document.getElementById("room").value.trim().toLowerCase();
+ return "life-room-"+r.replace(/[^a-z0-9_-]/g,"");
+}
+
+async function join(){
+ let n=document.getElementById("name").value.trim();
+ let r=document.getElementById("room").value.trim();
+
+ if(!n||!r){
+  alert("Name aur Room ID dono enter karo.");
+  return;
+ }
+
+ try{await getMic()}catch(e){return}
+
+ msg("🔄 Connecting...");
+ start(roomId());
+}
+
+function start(id){
+
+ peer=new Peer(id);
+
+ peer.on("open",()=>{
+  info.textContent="Room: "+id.replace("life-room-","");
+  msg("🟢 Room created. Waiting for another user...");
+  controls();
+ });
+
+ peer.on("call",c=>{
+  call=c;
+  c.answer(stream);
+  c.on("stream",remote=>{
+   audio(remote);
+   msg("🎙️ Live voice connected!");
+  });
+ });
+
+ peer.on("error",e=>{
+  if(e.type==="unavailable-id"){
+   guest(id);
+  }else{
+   msg("❌ Connection error: "+e.type);
+  }
+ });
+}
+
+function guest(id){
+
+ if(peer)peer.destroy();
+
+ peer=new Peer();
+
+ peer.on("open",()=>{
+  controls();
+  msg("📞 Connecting to room...");
+
+  call=peer.call(id,stream);
+
+  if(!call){
+   msg("❌ Room not found");
+   return;
+  }
+
+  call.on("stream",remote=>{
+   audio(remote);
+   msg("🎙️ Live voice connected!");
+  });
+
+  call.on("close",()=>{
+   msg("⚠️ Other user left");
+  });
+ });
+
+ peer.on("error",e=>{
+  msg("❌ "+e.type);
+ });
+}
+
+function audio(s){
+ let a=document.getElementById("audio");
+ if(!a){
+  a=document.createElement("audio");
+  a.id="audio";
+  a.autoplay=true;
+  a.playsInline=true;
+  document.body.appendChild(a);
+ }
+ a.srcObject=s;
+ a.play().catch(()=>{});
+}
+
+function controls(){
+ muteBtn.classList.remove("hidden");
+ leaveBtn.classList.remove("hidden");
+}
+
+function toggleMute(){
+ if(!stream)return;
+ muted=!muted;
+ stream.getAudioTracks().forEach(t=>t.enabled=!muted);
+ muteBtn.textContent=muted?"🔊 Unmute":"🔇 Mute";
+ msg=muted?status.textContent="🔇 Microphone muted":status.textContent="🎙️ Microphone on";
+}
+
+function leave(){
+ if(call)call.close();
+ if(peer)peer.destroy();
+ if(stream)stream.getTracks().forEach(t=>t.stop());
+
+ let a=document.getElementById("audio");
+ if(a)a.remove();
+
+ stream=null;
+ peer=null;
+ call=null;
+ muted=false;
+
+ muteBtn.classList.add("hidden");
+ leaveBtn.classList.add("hidden");
+ info.textContent="";
+ status.textContent="Ready to connect";
+}
 </script>
 
 </body>
