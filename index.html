@@ -206,9 +206,13 @@ name:myName
 });
 
 conn.on("data",d=>{
-if(d.type==="name"){
-addBothUsers(d.name);
-}
+  if(d.type==="name"){
+    addBothUsers(d.name);
+  }
+
+  if(d.type==="chat"){
+    addChatMessage(d.name,d.message);
+  }
 });
 });
 
@@ -266,6 +270,10 @@ data.on("data",d=>{
 
 if(d.type==="name"){
 addBothUsers(d.name);
+}
+
+if(d.type==="chat"){
+addChatMessage(d.name,d.message);
 }
 
 });
