@@ -360,11 +360,13 @@ chatBox.innerHTML = `
         style="flex:1;min-width:0;padding:12px;border:0;border-radius:10px;
 background:#292039;color:white;outline:none;direction:ltr;text-align:left;
 box-sizing:border-box;"
-      <button id="sendChatBtn"
-        style="padding:12px 18px;border:0;border-radius:10px;
-        background:#7c3aed;color:white;font-weight:bold;">
-        Send
-      </button>
+<button type="button" id="sendChatBtn"
+onclick="sendChat()"
+style="padding:12px 18px;border:0;border-radius:10px;
+background:#7c3aed;color:white;font-weight:bold;
+flex-shrink:0;">
+Send
+</button>
     </div>
   </div>
 `;
