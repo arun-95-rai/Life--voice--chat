@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Voice Chat</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #101020;
+      color: white;
+      text-align: center;
+    }
+
+    .header {
+      padding: 25px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .card {
+      margin: 20px;
+      padding: 25px;
+      background: #1d1d35;
+      border-radius: 20px;
+    }
+
+    input {
+      width: 85%;
+      padding: 14px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 14px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      background: #6c5ce7;
+      color: white;
+      font-size: 17px;
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+
+    #status {
+      margin-top: 20px;
+      color: #00e676;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">🎙️ Life Voice Chat</div>
+
+  <div class="card">
+    <h2>Join Voice Room</h2>
+
+    <input id="name" type="text" placeholder="Enter your name">
+
+    <input id="room" type="text" placeholder="Enter Room ID">
+
+    <br>
+
+    <button onclick="joinRoom()">Join Room</button>
+
+    <button onclick="micTest()">🎤 Test Mic</button>
+
+    <div id="status">Not connected</div>
+  </div>
+
+  <script>
+    function joinRoom() {
+      const name = document.getElementById("name").value;
+      const room = document.getElementById("room").value;
+
+      if (!name || !room) {
+        document.getElementById("status").innerText =
+          "Please enter Name and Room ID";
+        return;
+      }
+
+      document.getElementById("status").innerText =
+        "Room joined: " + room + " 👋";
+    }
+
+    async function micTest() {
+      try {
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+
+        document.getElementById("status").innerText =
+          "🎤 Microphone permission granted";
+      } catch (error) {
+        document.getElementById("status").innerText =
+          "Microphone permission denied";
+      }
+    }
+  </script>
+
+</body>
+</html>
