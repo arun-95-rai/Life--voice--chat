@@ -4,29 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Life Voice Chat</title>
-
 <script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;color:white;text-align:center;
- font-family:Arial,sans-serif;
- background:linear-gradient(135deg,#12002b,#301080,#09001c);
+margin:0;min-height:100vh;color:white;text-align:center;
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#12002b,#301080,#09001c)
 }
 header{padding:35px 15px 20px}
 .logo{font-size:60px}
 h1{font-size:38px;margin:8px}
 .sub{font-size:18px;color:#ddd}
 .card{
- width:90%;max-width:430px;margin:25px auto;padding:25px;
- background:#ffffff18;border:1px solid #ffffff30;
- border-radius:25px;box-shadow:0 15px 40px #0008;
+width:90%;max-width:430px;margin:25px auto;padding:25px;
+background:#ffffff18;border:1px solid #ffffff30;
+border-radius:25px;box-shadow:0 15px 40px #0008
 }
 h2{margin-top:0}
 input,button{
- width:100%;padding:16px;margin-top:12px;
- border:0;border-radius:15px;font-size:17px
+width:100%;padding:16px;margin-top:12px;
+border:0;border-radius:15px;font-size:17px
 }
 input{outline:0}
 button{font-weight:bold;color:white;background:linear-gradient(90deg,#315cff,#d000ff)}
@@ -35,8 +34,18 @@ button{font-weight:bold;color:white;background:linear-gradient(90deg,#315cff,#d0
 .orange{background:linear-gradient(90deg,#ff9800,#ff1744)}
 .status{margin-top:18px;color:#5fffcf}
 .info{margin-top:10px;color:#bbb;font-size:13px}
+.users{
+margin-top:18px;text-align:left;background:#0003;
+padding:15px;border-radius:15px
+}
+.user{
+padding:8px;border-bottom:1px solid #ffffff20
+}
+.online{color:#50ff9b}
 .hidden{display:none}
-.features{display:flex;justify-content:space-around;margin:30px 10px}
+.features{
+display:flex;justify-content:space-around;margin:30px 10px
+}
 .feature span{display:block;font-size:35px}
 .feature{color:#ddd}
 </style>
@@ -51,6 +60,7 @@ button{font-weight:bold;color:white;background:linear-gradient(90deg,#315cff,#d0
 </header>
 
 <div class="card">
+
 <h2>Join Voice Room</h2>
 
 <input id="name" placeholder="Enter your name">
@@ -64,6 +74,12 @@ button{font-weight:bold;color:white;background:linear-gradient(90deg,#315cff,#d0
 
 <div id="status" class="status">Ready to connect</div>
 <div id="info" class="info"></div>
+
+<div id="usersBox" class="users hidden">
+<b>👥 Connected Users</b>
+<div id="users"></div>
+</div>
+
 </div>
 
 <div class="features">
@@ -73,154 +89,254 @@ button{font-weight:bold;color:white;background:linear-gradient(90deg,#315cff,#d0
 </div>
 
 <script>
-let peer,stream,call,muted=false;
+
+let peer=null;
+let stream=null;
+let call=null;
+let data=null;
+let muted=false;
+let myName="";
+let room="";
 
 const status=document.getElementById("status");
 const info=document.getElementById("info");
+const usersBox=document.getElementById("usersBox");
+const users=document.getElementById("users");
 const muteBtn=document.getElementById("mute");
 const leaveBtn=document.getElementById("leave");
 
-function msg(x){status.textContent=x}
+function msg(t){
+status.textContent=t;
+}
 
 async function getMic(){
- if(stream)return stream;
- stream=await navigator.mediaDevices.getUserMedia({audio:true});
- return stream;
+if(stream)return stream;
+stream=await navigator.mediaDevices.getUserMedia({audio:true});
+return stream;
 }
 
 async function mic(){
- try{
-  await getMic();
-  msg("🎤 Microphone permission granted");
- }catch(e){
-  msg("❌ Microphone permission denied");
- }
+try{
+await getMic();
+msg("🎤 Microphone permission granted");
+}catch(e){
+msg("❌ Microphone permission denied");
+}
 }
 
-function roomId(){
- let r=document.getElementById("room").value.trim().toLowerCase();
- return "life-room-"+r.replace(/[^a-z0-9_-]/g,"");
+function showControls(){
+muteBtn.classList.remove("hidden");
+leaveBtn.classList.remove("hidden");
+usersBox.classList.remove("hidden");
+}
+
+function addUser(name){
+users.innerHTML=
+'<div class="user">🟢 <b>'+
+name+
+'</b> <span class="online">Online</span></div>';
+}
+
+function addBothUsers(otherName){
+users.innerHTML=
+'<div class="user">🟢 <b>'+
+myName+
+'</b> <span class="online">Online</span></div>'+
+'<div class="user">🟢 <b>'+
+otherName+
+'</b> <span class="online">Online</span></div>';
+}
+
+function audio(s){
+let a=document.getElementById("audio");
+
+if(!a){
+a=document.createElement("audio");
+a.id="audio";
+a.autoplay=true;
+a.playsInline=true;
+document.body.appendChild(a);
+}
+
+a.srcObject=s;
+a.play().catch(()=>{});
 }
 
 async function join(){
- let n=document.getElementById("name").value.trim();
- let r=document.getElementById("room").value.trim();
 
- if(!n||!r){
-  alert("Name aur Room ID dono enter karo.");
-  return;
- }
+myName=document.getElementById("name").value.trim();
+room=document.getElementById("room").value.trim();
 
- try{await getMic()}catch(e){return}
+if(!myName||!room){
+alert("Name aur Room ID dono enter karo.");
+return;
+}
 
- msg("🔄 Connecting...");
- start(roomId());
+try{
+await getMic();
+}catch(e){
+return;
+}
+
+msg("🔄 Connecting...");
+start("life-room-"+room.toLowerCase().replace(/[^a-z0-9_-]/g,""));
 }
 
 function start(id){
 
- peer=new Peer(id);
+peer=new Peer(id);
 
- peer.on("open",()=>{
-  info.textContent="Room: "+id.replace("life-room-","");
-  msg("🟢 Room created. Waiting for another user...");
-  controls();
- });
+peer.on("open",()=>{
 
- peer.on("call",c=>{
-  call=c;
-  c.answer(stream);
-  c.on("stream",remote=>{
-   audio(remote);
-   msg("🎙️ Live voice connected!");
-  });
- });
+info.textContent="Room: "+room;
 
- peer.on("error",e=>{
-  if(e.type==="unavailable-id"){
-   guest(id);
-  }else{
-   msg("❌ Connection error: "+e.type);
-  }
- });
+msg("🟢 Room created. Waiting for another user...");
+
+addUser(myName);
+showControls();
+
+peer.on("connection",conn=>{
+data=conn;
+
+conn.on("open",()=>{
+conn.send({
+type:"name",
+name:myName
+});
+});
+
+conn.on("data",d=>{
+if(d.type==="name"){
+addBothUsers(d.name);
+}
+});
+});
+
+});
+
+peer.on("call",c=>{
+
+call=c;
+c.answer(stream);
+
+c.on("stream",remote=>{
+audio(remote);
+msg("🎙️ Live voice connected!");
+});
+
+});
+
+peer.on("error",e=>{
+
+if(e.type==="unavailable-id"){
+guest(id);
+}else{
+msg("❌ Connection error: "+e.type);
+}
+
+});
+
 }
 
 function guest(id){
 
- if(peer)peer.destroy();
-
- peer=new Peer();
-
- peer.on("open",()=>{
-  controls();
-  msg("📞 Connecting to room...");
-
-  call=peer.call(id,stream);
-
-  if(!call){
-   msg("❌ Room not found");
-   return;
-  }
-
-  call.on("stream",remote=>{
-   audio(remote);
-   msg("🎙️ Live voice connected!");
-  });
-
-  call.on("close",()=>{
-   msg("⚠️ Other user left");
-  });
- });
-
- peer.on("error",e=>{
-  msg("❌ "+e.type);
- });
+if(peer){
+peer.destroy();
 }
 
-function audio(s){
- let a=document.getElementById("audio");
- if(!a){
-  a=document.createElement("audio");
-  a.id="audio";
-  a.autoplay=true;
-  a.playsInline=true;
-  document.body.appendChild(a);
- }
- a.srcObject=s;
- a.play().catch(()=>{});
+peer=new Peer();
+
+peer.on("open",()=>{
+
+showControls();
+msg("📞 Connecting to room...");
+
+data=peer.connect(id);
+
+data.on("open",()=>{
+
+data.send({
+type:"name",
+name:myName
+});
+
+});
+
+data.on("data",d=>{
+
+if(d.type==="name"){
+addBothUsers(d.name);
 }
 
-function controls(){
- muteBtn.classList.remove("hidden");
- leaveBtn.classList.remove("hidden");
+});
+
+call=peer.call(id,stream);
+
+call.on("stream",remote=>{
+audio(remote);
+msg("🎙️ Live voice connected!");
+});
+
+call.on("close",()=>{
+msg("⚠️ Other user left");
+});
+
+});
+
+peer.on("error",e=>{
+msg("❌ "+e.type);
+});
+
 }
 
 function toggleMute(){
- if(!stream)return;
- muted=!muted;
- stream.getAudioTracks().forEach(t=>t.enabled=!muted);
- muteBtn.textContent=muted?"🔊 Unmute":"🔇 Mute";
- msg=muted?status.textContent="🔇 Microphone muted":status.textContent="🎙️ Microphone on";
+
+if(!stream)return;
+
+muted=!muted;
+
+stream.getAudioTracks().forEach(t=>{
+t.enabled=!muted;
+});
+
+muteBtn.textContent=
+muted?"🔊 Unmute":"🔇 Mute";
+
+msg=
+muted?
+status.textContent="🔇 Microphone muted":
+status.textContent="🎙️ Microphone on";
 }
 
 function leave(){
- if(call)call.close();
- if(peer)peer.destroy();
- if(stream)stream.getTracks().forEach(t=>t.stop());
 
- let a=document.getElementById("audio");
- if(a)a.remove();
+if(call)call.close();
+if(data)data.close();
+if(peer)peer.destroy();
 
- stream=null;
- peer=null;
- call=null;
- muted=false;
-
- muteBtn.classList.add("hidden");
- leaveBtn.classList.add("hidden");
- info.textContent="";
- status.textContent="Ready to connect";
+if(stream){
+stream.getTracks().forEach(t=>t.stop());
 }
+
+let a=document.getElementById("audio");
+if(a)a.remove();
+
+peer=null;
+call=null;
+data=null;
+stream=null;
+muted=false;
+
+muteBtn.classList.add("hidden");
+leaveBtn.classList.add("hidden");
+usersBox.classList.add("hidden");
+
+info.textContent="";
+users.innerHTML="";
+
+status.textContent="Ready to connect";
+}
+
 </script>
 
 </body>
