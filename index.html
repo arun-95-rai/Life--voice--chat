@@ -355,7 +355,32 @@ chatBox.innerHTML = `
       padding:10px;border-radius:10px;margin-bottom:10px;color:white;">
     </div>
 
-    <div style="display:flex;gap:8px;width:100%;align-items:stretch;">
+<div style="margin-bottom:10px;">
+
+  <div style="display:flex;gap:8px;overflow-x:auto;
+  padding:8px;background:#0d0a14;border-radius:12px;
+  white-space:nowrap;scrollbar-width:none;">
+
+    <button type="button" onclick="addSticker('😊')">😊</button>
+    <button type="button" onclick="addSticker('😂')">😂</button>
+    <button type="button" onclick="addSticker('😍')">😍</button>
+    <button type="button" onclick="addSticker('😘')">😘</button>
+    <button type="button" onclick="addSticker('❤️')">❤️</button>
+    <button type="button" onclick="addSticker('🔥')">🔥</button>
+    <button type="button" onclick="addSticker('👍')">👍</button>
+    <button type="button" onclick="addSticker('🎉')">🎉</button>
+    <button type="button" onclick="addSticker('🎂')">🎂</button>
+    <button type="button" onclick="addSticker('🥰')">🥰</button>
+    <button type="button" onclick="addSticker('🤗')">🤗</button>
+    <button type="button" onclick="addSticker('💯')">💯</button>
+    <button type="button" onclick="addSticker('👑')">👑</button>
+    <button type="button" onclick="addSticker('🌹')">🌹</button>
+
+  </div>
+
+</div>
+
+<div style="display:flex;gap:8px;width:100%;align-items:stretch;">
 
   <input id="chatInput" type="text" placeholder="Type message..."
     style="flex:1;min-width:0;width:auto;padding:12px;
@@ -372,7 +397,6 @@ chatBox.innerHTML = `
   </button>
 
 </div>
-  </div>
 `;
 
 document.body.appendChild(chatBox);
