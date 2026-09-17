@@ -336,7 +336,79 @@ users.innerHTML="";
 
 status.textContent="Ready to connect";
 }
+// CHAT
+const chatBox = document.createElement("div");
+chatBox.innerHTML = `
+  <div style="margin-top:20px;padding:15px;background:#181225;border-radius:15px;">
+    <h3 style="margin:0 0 10px;color:#fff;">💬 Live Chat</h3>
 
+    <div id="messages"
+      style="height:180px;overflow-y:auto;background:#0d0a14;
+      padding:10px;border-radius:10px;margin-bottom:10px;color:white;">
+    </div>
+
+    <div style="display:flex;gap:8px;">
+      <input id="chatInput" type="text" placeholder="Type message..."
+        style="flex:1;padding:12px;border:0;border-radius:10px;
+        background:#292039;color:white;outline:none;">
+
+      <button id="sendChatBtn"
+        style="padding:12px 18px;border:0;border-radius:10px;
+        background:#7c3aed;color:white;font-weight:bold;">
+        Send
+      </button>
+    </div>
+  </div>
+`;
+
+document.body.appendChild(chatBox);
+
+function addChatMessage(name, message){
+  const messages = document.getElementById("messages");
+
+  const msg = document.createElement("div");
+  msg.style.marginBottom = "8px";
+  msg.innerHTML = `<b>${name}:</b> ${message}`;
+
+  messages.appendChild(msg);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function sendChat(){
+  const input = document.getElementById("chatInput");
+  const message = input.value.trim();
+
+  if(!message) return;
+
+  addChatMessage("You", message);
+
+  if(data && data.open){
+    data.send({
+      type:"chat",
+      name:myName,
+      message:message
+    });
+  }
+
+  input.value = "";
+}
+
+document.getElementById("sendChatBtn").onclick = sendChat;
+
+document.getElementById("chatInput").addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    sendChat();
+  }
+});
+
+// Receive chat messages
+if(data){
+  data.on("data", d=>{
+    if(d.type === "chat"){
+      addChatMessage(d.name, d.message);
+    }
+  });
+}
 </script>
 
 </body>
