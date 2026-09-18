@@ -466,7 +466,9 @@ function createAccount(){
     alert("Password does not match");
     return;
   }
+const userId = Math.floor(10000000 + Math.random() * 90000000);
 
+localStorage.setItem("lifeId", userId);
   localStorage.setItem("lifeName", name);
   localStorage.setItem("lifeUser", phone);
   localStorage.setItem("lifePass", pass);
