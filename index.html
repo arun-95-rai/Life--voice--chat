@@ -129,66 +129,271 @@ display:flex;justify-content:space-around;margin:30px 10px
 
 </div>
 <!-- INBOX END -->
+
 <!-- PROFILE START -->
-<div id="profileScreen" class="card hidden">
+<div id="profileScreen" class="card hidden"
+style="padding:0;overflow:hidden;background:#fff;color:#222;">
 
-<h2>👤 My Profile</h2>
+  <!-- COVER -->
+  <div style="
+    height:220px;
+    background:linear-gradient(135deg,#39e75f,#dfff00,#20c8ff);
+    position:relative;
+    padding:18px;
+  ">
 
-<div style="text-align:center;margin:20px 0;">
-  <div style="font-size:70px;">👤</div>
-<input type="file" id="profilePhotoInput" accept="image/*" onchange="changeProfilePhoto(this)">
-<br><br>
-<img id="profilePhoto"
-     style="width:120px;height:120px;border-radius:50%;object-fit:cover;display:none;">
-  <h2 id="profileName">User</h2>
-<h2 id="profileName">User</h2>
+    <!-- Edit / Save -->
+    <button type="button" id="editProfileBtn"
+      onclick="editProfile()"
+      style="
+      position:absolute;
+      top:15px;
+      right:15px;
+      width:auto;
+      padding:10px 16px;
+      border:0;
+      border-radius:20px;
+      background:rgba(255,255,255,.9);
+      color:#222;
+      font-weight:bold;
+      z-index:5;">
+      ✏️ Edit
+    </button>
 
-<button type="button" id="editProfileBtn" onclick="editProfile()">
-✏️ Edit Profile
-</button>
+    <!-- DP -->
+    <div style="
+      position:absolute;
+      left:25px;
+      bottom:-55px;
+      width:115px;
+      height:115px;
+      border-radius:50%;
+      border:5px solid white;
+      background:#ddd;
+      overflow:hidden;
+      box-shadow:0 3px 12px #555;
+    ">
+      <div id="defaultProfileIcon"
+        style="font-size:75px;text-align:center;padding-top:12px;">
+        👤
+      </div>
 
-<p style="color:#aaa;">
-  <p style="color:#aaa;">
-    🆔 ID: <b id="profileId"></b>
-  </p>
-</div>
-
-<div style="background:#211633;padding:15px;border-radius:15px;margin-bottom:15px;">
-  <b>📝 Bio</b>
-  <p id="profileBio">Hello everyone ❤️</p>
-</div>
-
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;">
-
-  <div>
-    <b id="friendCount">0</b>
-    <small>👥 Friends</small>
+      <img id="profilePhoto"
+        style="
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        display:none;
+        position:absolute;
+        left:0;
+        top:0;">
+    </div>
   </div>
 
-  <div>
-    <b id="followingCount">0</b>
-    <small>➕ Following</small>
+  <!-- PROFILE INFO -->
+  <div style="padding:70px 20px 20px;">
+
+    <input type="file"
+      id="profilePhotoInput"
+      accept="image/*"
+      onchange="changeProfilePhoto(this)"
+      style="display:none;">
+
+    <h2 id="profileName"
+      style="margin:0 0 8px;font-size:27px;">
+      User
+    </h2>
+
+    <div style="color:#777;font-size:15px;margin-bottom:15px;">
+      🆔 ID: <b id="profileId"></b>
+    </div>
+
+    <!-- BIO -->
+    <div style="
+      background:#f5f5f5;
+      padding:18px;
+      border-radius:16px;
+      margin-bottom:18px;
+    ">
+      <h3 style="margin:0 0 10px;">📝 About me</h3>
+      <p id="profileBio" style="margin:0;line-height:1.5;">
+        Hello everyone ❤️
+      </p>
+    </div>
+
+    <!-- STATS -->
+    <div style="
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:8px;
+      text-align:center;
+      margin-bottom:18px;
+    ">
+
+      <div>
+        <b id="followerCount">0</b><br>
+        <small>Followers</small>
+      </div>
+
+      <div>
+        <b id="followingCount">0</b><br>
+        <small>Following</small>
+      </div>
+
+      <div>
+        <b id="friendCount">0</b><br>
+        <small>Friends</small>
+      </div>
+
+    </div>
+
+    <!-- RELATIONSHIP / FAMILY -->
+    <div style="
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:15px;
+    ">
+
+      <button type="button"
+        style="
+        padding:20px 10px;
+        border:0;
+        border-radius:15px;
+        background:#ffd6ee;
+        font-weight:bold;">
+        ❤️<br>Relationship
+        <br><small>0</small>
+      </button>
+
+      <button type="button"
+        style="
+        padding:20px 10px;
+        border:0;
+        border-radius:15px;
+        background:#fff0d5;
+        font-weight:bold;">
+        👨‍👩‍👧<br>Family
+        <br><small>0</small>
+      </button>
+
+    </div>
+
+    <!-- WALLET -->
+    <div style="
+      background:#e8ffe8;
+      padding:18px;
+      border-radius:15px;
+      margin-bottom:18px;
+    ">
+      <div style="font-size:20px;">
+        💰 Wallet
+        <span style="float:right;">💎 0</span>
+      </div>
+
+      <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+        margin-top:12px;
+      ">
+
+        <div style="
+          background:white;
+          padding:15px;
+          border-radius:12px;">
+          🛡️<br>
+          <b>VIP</b>
+          <br><small>VIP 0</small>
+        </div>
+
+        <div style="
+          background:white;
+          padding:15px;
+          border-radius:12px;">
+          🏆<br>
+          <b>Level</b>
+          <br><small>LV 1</small>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ABOUT DETAILS -->
+    <div style="
+      border-top:1px solid #ddd;
+      padding-top:15px;
+    ">
+
+      <h2>About me</h2>
+
+      <p>📅 Birthday — Not set</p>
+      <p>♊ Zodiac — Not set</p>
+      <p>📍 Location — Not set</p>
+
+      <div style="
+        display:flex;
+        flex-wrap:wrap;
+        gap:7px;
+      ">
+        <span style="background:#eee;padding:8px 12px;border-radius:15px;">
+          Energetic
+        </span>
+        <span style="background:#eee;padding:8px 12px;border-radius:15px;">
+          Friendly
+        </span>
+        <span style="background:#eee;padding:8px 12px;border-radius:15px;">
+          Life
+        </span>
+      </div>
+
+    </div>
+
+    <!-- CP + DP LIKE -->
+    <div style="
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:20px;
+    ">
+
+      <button type="button"
+        style="
+        padding:15px;
+        border:0;
+        border-radius:15px;
+        background:#ffd8ec;
+        font-weight:bold;">
+        ❤️ CP
+      </button>
+
+      <button type="button"
+        style="
+        padding:15px;
+        border:0;
+        border-radius:15px;
+        background:#e5edff;
+        font-weight:bold;">
+        👍 DP Like
+        <span id="likeCount">0</span>
+      </button>
+
+    </div>
+
+    <button type="button"
+      onclick="backHome()"
+      style="
+      width:100%;
+      margin-top:15px;
+      padding:15px;
+      border:0;
+      border-radius:15px;
+      background:#eee;
+      font-weight:bold;">
+      🏠 Back Home
+    </button>
+
   </div>
-
-  <div>
-    <b id="followerCount">0</b>
-    <small>👤 Followers</small>
-  </div>
-
-</div>
-
-<div style="margin-top:20px;text-align:center;">
-
-  <button type="button">❤️ CP</button>
-
-  <button type="button">👍 DP Like <span id="likeCount">0</span></button>
-
-</div>
-
-<button type="button" onclick="backHome()">
-🏠 Back Home
-</button>
-
 </div>
 <!-- PROFILE END -->
 <div id="roomScreen" class="card hidden">
