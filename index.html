@@ -85,21 +85,190 @@ display:flex;justify-content:space-around;margin:30px 10px
   <p>Already have an account?</p>
   <button onclick="showLogin()">Login</button>
 </div>
-  <div id="homeScreen" class="card hidden">
+<div id="homeScreen" class="card hidden" style="
+padding:0;
+overflow:hidden;
+background:linear-gradient(180deg,#20d7c2 0%,#f7f7f7 30%);
+color:#222;
+min-height:100vh;
+">
 
-<h2>🏠 LIFE HOME</h2>
+  <!-- TOP BAR -->
+  <div style="
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:22px 18px 14px;
+  color:white;
+  ">
 
-<p>Welcome to Life Voice Chat ❤️</p>
+    <button onclick="showProfile()" style="
+    width:50px;height:50px;
+    border:3px solid white;
+    border-radius:50%;
+    background:#ddd;
+    font-size:25px;
+    ">👤</button>
 
-<button onclick="openRooms()">🎙️ Live Voice Rooms</button>
+    <div style="display:flex;gap:28px;font-size:20px;">
+      <b style="opacity:.65;">Mine</b>
+      <b>Recommend</b>
+      <b style="opacity:.65;">Hot</b>
+    </div>
 
-<button onclick="openChat()">📩 Inbox</button>
+    <button style="
+    background:none;
+    border:0;
+    color:white;
+    font-size:30px;
+    ">⌕</button>
 
-<button onclick="showProfile()">👤 My Profile</button>
+  </div>
 
-<button onclick="showWallet()">💰 My Wallet</button>
+  <!-- TOP STAR BANNER -->
+  <div style="
+  margin:8px 14px;
+  height:150px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#65a9ff,#3975e8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  text-align:center;
+  font-size:25px;
+  font-weight:bold;
+  ">
+    ⭐<br>
+    TOP STARS
+  </div>
 
-<button onclick="showGifts()">🎁 Gift Store</button>
+  <!-- PROMOTION -->
+  <div style="
+  margin:14px;
+  padding:20px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#ffd36b,#b56a18);
+  color:white;
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+  ">
+    💖 LIFE VOICE CHAT 💖<br>
+    <small>Welcome to Life</small>
+  </div>
+
+  <!-- CATEGORY -->
+  <div style="
+  display:flex;
+  gap:22px;
+  overflow-x:auto;
+  padding:8px 16px 14px;
+  white-space:nowrap;
+  background:white;
+  ">
+    <b style="color:#18bcae;">🇮🇳 India⌄</b>
+    <span>ALL</span>
+    <span>Family</span>
+    <span>Friends</span>
+    <span>Sing</span>
+    <span>Love</span>
+  </div>
+
+  <!-- LIVE ROOMS -->
+  <div style="padding:14px 16px 90px;background:#fff;">
+
+    <h2 style="margin:8px 0 14px;">
+      🎙️ Live Rooms
+    </h2>
+
+    <div style="
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    ">
+
+      <div onclick="openRooms()" style="
+      height:150px;
+      border-radius:18px;
+      padding:14px;
+      background:linear-gradient(135deg,#30204d,#8b3d8f);
+      color:white;
+      cursor:pointer;
+      ">
+        🟢 <b>Live Room</b>
+        <br><br>
+        🎙️ Join Room
+        <br>
+        <small>Tap to enter</small>
+      </div>
+
+      <div onclick="openRooms()" style="
+      height:150px;
+      border-radius:18px;
+      padding:14px;
+      background:linear-gradient(135deg,#142b48,#2878a8);
+      color:white;
+      cursor:pointer;
+      ">
+        🟢 <b>Voice Room</b>
+        <br><br>
+        👥 Live Now
+        <br>
+        <small>Tap to enter</small>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAVIGATION -->
+  <div style="
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  padding:10px 5px;
+  border-top:1px solid #ddd;
+  z-index:100;
+  ">
+
+    <button onclick="openRooms()" style="background:none;border:0;font-size:25px;">
+      🤟
+      <br><small>Explore</small>
+    </button>
+
+    <button style="background:none;border:0;font-size:25px;">
+      🪐
+      <br><small>Discover</small>
+    </button>
+
+    <button onclick="openRooms()" style="
+    width:58px;height:58px;
+    border-radius:50%;
+    border:0;
+    background:linear-gradient(135deg,#72ed20,#19d96b);
+    color:white;
+    font-size:32px;
+    ">
+      +
+    </button>
+
+    <button onclick="openChat()" style="background:none;border:0;font-size:25px;">
+      💬
+      <br><small>Message</small>
+    </button>
+
+    <button onclick="showProfile()" style="background:none;border:0;font-size:25px;">
+      👤
+      <br><small>Profile</small>
+    </button>
+
+  </div>
 
 </div>
   </div>
