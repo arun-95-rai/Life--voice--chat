@@ -151,7 +151,33 @@ display:flex;justify-content:space-around;margin:30px 10px
 <b>👥 Connected Users</b>
 <div id="users"></div>
 </div>
+<div id="seatsBox" style="margin-top:20px;">
+<h3>🎙️ Voice Room Seats</h3>
 
+<div id="seats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+
+<button class="seat" onclick="selectSeat(1)">🪑 1<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(2)">🪑 2<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(3)">🪑 3<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(4)">🪑 4<br><small>Empty</small></button>
+
+<button class="seat" onclick="selectSeat(5)">🪑 5<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(6)">🪑 6<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(7)">🪑 7<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(8)">🪑 8<br><small>Empty</small></button>
+
+<button class="seat" onclick="selectSeat(9)">🪑 9<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(10)">🪑 10<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(11)">🪑 11<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(12)">🪑 12<br><small>Empty</small></button>
+
+<button class="seat" onclick="selectSeat(13)">🪑 13<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(14)">🪑 14<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(15)">🪑 15<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(16)">🪑 16<br><small>Empty</small></button>
+
+</div>
+</div>
 </div>
 
 <div class="features">
@@ -161,6 +187,21 @@ display:flex;justify-content:space-around;margin:30px 10px
 </div>
 
 <script>
+  let selectedSeat = 0;
+
+function selectSeat(seat){
+  selectedSeat = seat;
+
+  document.querySelectorAll(".seat").forEach((btn,index)=>{
+    btn.style.border = "2px solid transparent";
+
+    if(index === seat-1){
+      btn.style.border = "3px solid #00ff88";
+    }
+  });
+
+  msg("🪑 Seat " + seat + " selected");
+}
 
 let peer=null;
 let stream=null;
