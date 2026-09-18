@@ -181,7 +181,65 @@ function openChat(){
     window.scrollTo(0, document.body.scrollHeight);
 }
 function openPrivateChat(name){
-    alert("💬 Private Chat with " + name);
+    const chat = document.createElement("div");
+
+    chat.style.position = "fixed";
+    chat.style.left = "0";
+    chat.style.right = "0";
+    chat.style.bottom = "0";
+    chat.style.background = "#171022";
+    chat.style.padding = "20px";
+    chat.style.zIndex = "9999";
+    chat.style.borderRadius = "25px 25px 0 0";
+
+    chat.innerHTML = `
+        <h2 style="color:white;text-align:center;">
+        💬 Chat with ${name}
+        </h2>
+
+        <div id="privateMessages"
+             style="height:250px;overflow:auto;background:#0d0914;
+             border-radius:15px;padding:15px;color:white;margin-bottom:10px;">
+        </div>
+
+        <div style="display:flex;gap:8px;">
+            <input id="privateInput"
+                   placeholder="Type message..."
+                   style="flex:1;padding:15px;border-radius:15px;border:0;">
+
+            <button onclick="sendPrivateMessage('${name}')"
+                    style="padding:15px 20px;border:0;border-radius:15px;
+                    background:linear-gradient(90deg,#315cff,#d000ff);
+                    color:white;font-weight:bold;">
+                Send
+            </button>
+        </div>
+
+        <button onclick="this.parentElement.remove()"
+                style="width:100%;margin-top:10px;padding:12px;
+                border:0;border-radius:15px;background:#ff304f;color:white;">
+            ✖ Close Chat
+        </button>
+    `;
+
+    document.body.appendChild(chat);
+}
+  function sendPrivateMessage(name){
+    const input = document.getElementById("privateInput");
+    const box = document.getElementById("privateMessages");
+
+    const message = input.value.trim();
+
+    if(!message) return;
+
+    const div = document.createElement("div");
+    div.style.marginBottom = "10px";
+    div.innerHTML = "<b>You:</b> " + message;
+
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+
+    input.value = "";
 }
 function backHome(){
     document.getElementById("inboxScreen").classList.add("hidden");
