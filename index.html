@@ -131,21 +131,28 @@ usersBox.classList.remove("hidden");
 }
 
 function addUser(name){
-users.innerHTML=
-'<div class="user">🟢 <b>'+
-name+
-'</b> <span class="online">Online</span></div>';
+  users.innerHTML=
+  '<div class="user mentionUser" onclick="mentionUser(\''+name+'\')">🟢 <b>'+
+  name+
+  '</b> <span class="online">Online</span></div>';
 }
 
 function addBothUsers(otherName){
-users.innerHTML=
-'<div class="user">🟢 <b>'+
-myName+
-'</b> <span class="online">Online</span></div>'+
-'<div class="user">🟢 <b>'+
-otherName+
-'</b> <span class="online">Online</span></div>';
+  users.innerHTML=
+  '<div class="user mentionUser" onclick="mentionUser(\''+myName+'\')">🟢 <b>'+
+  myName+
+  '</b> <span class="online">Online</span></div>'+
+  '<div class="user mentionUser" onclick="mentionUser(\''+otherName+'\')">🟢 <b>'+
+  otherName+
+  '</b> <span class="online">Online</span></div>';
 }
+
+function mentionUser(name){
+  const input=document.getElementById("chatInput");
+  input.value="@"+name+" ";
+  input.focus();
+}
+
 
 function audio(s){
 let a=document.getElementById("audio");
