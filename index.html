@@ -544,7 +544,16 @@ const leaveBtn=document.getElementById("leave");
 function msg(t){
 status.textContent=t;
 }
+function showProfile(){
+  document.getElementById("homeScreen").classList.add("hidden");
+  document.getElementById("profileScreen").classList.remove("hidden");
 
+  const name = localStorage.getItem("lifeName") || "User";
+  const id = localStorage.getItem("lifeId") || "Not Available";
+
+  document.getElementById("profileName").textContent = name;
+  document.getElementById("profileId").textContent = id;
+}
 async function getMic(){
 if(stream)return stream;
 stream=await navigator.mediaDevices.getUserMedia({audio:true});
