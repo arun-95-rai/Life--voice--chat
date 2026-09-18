@@ -58,8 +58,20 @@ display:flex;justify-content:space-around;margin:30px 10px
 <h1>Life Voice Chat</h1>
 <div class="sub">Connect • Talk • Enjoy</div>
 </header>
+<div id="loginScreen" class="card">
+  <h2>👑 LIFE VOICE CHAT</h2>
+  <p>Welcome Back</p>
 
-<div class="card">
+  <input id="loginUser" placeholder="📱 Phone Number / User ID">
+  <input id="loginPass" type="password" placeholder="🔒 Password">
+
+  <button onclick="loginUser()">Login</button>
+
+  <p>OR</p>
+
+  <button onclick="showSignup()">✨ Create Account</button>
+</div>
+<div id="roomScreen" class="card hidden">
 
 <h2>Join Voice Room</h2>
 
@@ -97,7 +109,22 @@ let data=null;
 let muted=false;
 let myName="";
 let room="";
+function loginUser(){
+  const user = document.getElementById("loginUser").value.trim();
+  const pass = document.getElementById("loginPass").value.trim();
 
+  if(!user || !pass){
+    alert("Please enter User ID and Password");
+    return;
+  }
+
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("roomScreen").classList.remove("hidden");
+}
+
+function showSignup(){
+  alert("Signup screen coming next!");
+}
 const status=document.getElementById("status");
 const info=document.getElementById("info");
 const usersBox=document.getElementById("usersBox");
