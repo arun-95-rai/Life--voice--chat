@@ -141,6 +141,11 @@ let muted=false;
 let myName="";
 let room="";
   function openRooms(){
+    function openChat(){
+  document.getElementById("homeScreen").classList.add("hidden");
+  document.getElementById("roomScreen").classList.remove("hidden");
+  window.scrollTo(0, document.body.scrollHeight);
+}
   document.getElementById("homeScreen").classList.add("hidden");
   document.getElementById("roomScreen").classList.remove("hidden");
 }
