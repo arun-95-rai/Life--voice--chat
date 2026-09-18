@@ -414,7 +414,17 @@ msg.style.textAlign = "left";
   messages.appendChild(msg);
   messages.scrollTop = messages.scrollHeight;
 }
+function addSticker(sticker){
+  addChatMessage("You", sticker);
 
+  if(data && data.open){
+    data.send({
+      type:"sticker",
+      name:myName,
+      sticker:sticker
+    });
+  }
+}
 function sendChat(){
   const input = document.getElementById("chatInput");
   const message = input.value.trim();
