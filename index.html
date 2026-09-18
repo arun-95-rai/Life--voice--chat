@@ -110,7 +110,7 @@ display:flex;justify-content:space-around;margin:30px 10px
 <h2>📩 Inbox</h2>
 <p>Messages & Conversations</p>
 
-<div class="user">
+<div class="user" onclick="openPrivateChat('Rahul')">
 🟢 <b>Rahul</b>
 <span class="online">Online</span>
 </div>
@@ -131,7 +131,7 @@ display:flex;justify-content:space-around;margin:30px 10px
 <!-- INBOX END -->
 
 <div id="roomScreen" class="card hidden">
-<div id="roomScreen" class="card hidden">
+
 
 <h2>Join Voice Room</h2>
 
@@ -175,11 +175,14 @@ let room="";
 }
 
 function openChat(){
+
     document.getElementById("homeScreen").classList.add("hidden");
     document.getElementById("inboxScreen").classList.remove("hidden");
     window.scrollTo(0, document.body.scrollHeight);
 }
-
+function openPrivateChat(name){
+    alert("💬 Private Chat with " + name);
+}
 function backHome(){
     document.getElementById("inboxScreen").classList.add("hidden");
     document.getElementById("homeScreen").classList.remove("hidden");
