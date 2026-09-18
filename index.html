@@ -171,6 +171,15 @@ let myName="";
 let room="";
   function openRooms(){
     function openChat(){
+    document.getElementById("homeScreen").classList.add("hidden");
+    document.getElementById("inboxScreen").classList.remove("hidden");
+}
+
+function backHome(){
+    document.getElementById("inboxScreen").classList.add("hidden");
+    document.getElementById("homeScreen").classList.remove("hidden");
+}
+    function openChat(){
   document.getElementById("homeScreen").classList.add("hidden");
   document.getElementById("roomScreen").classList.remove("hidden");
   window.scrollTo(0, document.body.scrollHeight);
