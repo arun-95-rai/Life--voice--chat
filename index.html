@@ -151,43 +151,140 @@ display:flex;justify-content:space-around;margin:30px 10px
 <b>👥 Connected Users</b>
 <div id="users"></div>
 </div>
+
 <div id="seatsBox" style="margin-top:20px;">
-<h3>🎙️ Voice Room Seats</h3>
+<h3 style="color:white;text-align:center;">🎤 Voice Room</h3>
 
-<div id="seats" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;">
+<div id="seats"
+style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding:10px;">
 
-<button class="seat" onclick="selectSeat(1)">🪑 1<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(2)">🪑 2<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(3)">🪑 3<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(4)">🪑 4<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(1)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">1</small>
+</button>
 
-<button class="seat" onclick="selectSeat(5)">🪑 5<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(6)">🪑 6<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(7)">🪑 7<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(8)">🪑 8<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(2)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">2</small>
+</button>
 
-<button class="seat" onclick="selectSeat(9)">🪑 9<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(10)">🪑 10<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(11)">🪑 11<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(12)">🪑 12<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(3)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">3</small>
+</button>
 
-<button class="seat" onclick="selectSeat(13)">🪑 13<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(14)">🪑 14<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(15)">🪑 15<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(16)">🪑 16<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(17)">🪑 17<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(18)">🪑 18<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(19)">🪑 19<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(20)">🪑 20<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(21)">🪑 21<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(22)">🪑 22<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(23)">🪑 23<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(24)">🪑 24<br><small>Empty</small></button>
-<button class="seat" onclick="selectSeat(25)">🪑 25<br><small>Empty</small></button>
+<button class="seat" onclick="selectSeat(4)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">4</small>
+</button>
+
+<button class="seat" onclick="selectSeat(5)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">5</small>
+</button>
+
+<button class="seat" onclick="selectSeat(6)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">6</small>
+</button>
+
+<button class="seat" onclick="selectSeat(7)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">7</small>
+</button>
+
+<button class="seat" onclick="selectSeat(8)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">8</small>
+</button>
+
+<button class="seat" onclick="selectSeat(9)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">9</small>
+</button>
+
+<button class="seat" onclick="selectSeat(10)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">10</small>
+</button>
+
+<button class="seat" onclick="selectSeat(11)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">11</small>
+</button>
+
+<button class="seat" onclick="selectSeat(12)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">12</small>
+</button>
+
+<button class="seat" onclick="selectSeat(13)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">13</small>
+</button>
+
+<button class="seat" onclick="selectSeat(14)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">14</small>
+</button>
+
+<button class="seat" onclick="selectSeat(15)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">15</small>
+</button>
+
+<button class="seat" onclick="selectSeat(16)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">16</small>
+</button>
+
+<button class="seat" onclick="selectSeat(17)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">17</small>
+</button>
+
+<button class="seat" onclick="selectSeat(18)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">18</small>
+</button>
+
+<button class="seat" onclick="selectSeat(19)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">19</small>
+</button>
+
+<button class="seat" onclick="selectSeat(20)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">20</small>
+</button>
+
+<button class="seat" onclick="selectSeat(21)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">21</small>
+</button>
+
+<button class="seat" onclick="selectSeat(22)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">22</small>
+</button>
+
+<button class="seat" onclick="selectSeat(23)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">23</small>
+</button>
+
+<button class="seat" onclick="selectSeat(24)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">24</small>
+</button>
+
+<button class="seat" onclick="selectSeat(25)"
+style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2px solid rgba(0,255,255,.25);color:#00ffff;font-size:25px;">
+🔒<br><small style="font-size:11px;color:white;">25</small>
+</button>
+
 </div>
 </div>
-</div>
-
 <div class="features">
 <div class="feature"><span>👥</span>Voice Rooms</div>
 <div class="feature"><span>🎤</span>Live Voice</div>
