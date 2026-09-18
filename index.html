@@ -188,36 +188,42 @@ min-height:100vh;
     gap:12px;
     ">
 
-      <div onclick="openRooms()" style="
-      height:150px;
-      border-radius:18px;
-      padding:14px;
-      background:linear-gradient(135deg,#30204d,#8b3d8f);
-      color:white;
-      cursor:pointer;
-      ">
-        🟢 <b>Live Room</b>
-        <br><br>
-        🎙️ Join Room
-        <br>
-        <small>Tap to enter</small>
-      </div>
+      <div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:14px;
+">
+  <h2 style="margin:0;">🎙️ Live Rooms</h2>
 
-      <div onclick="openRooms()" style="
-      height:150px;
-      border-radius:18px;
-      padding:14px;
-      background:linear-gradient(135deg,#142b48,#2878a8);
-      color:white;
-      cursor:pointer;
-      ">
-        🟢 <b>Voice Room</b>
-        <br><br>
-        👥 Live Now
-        <br>
-        <small>Tap to enter</small>
-      </div>
+  <button onclick="createRoom()" style="
+  border:0;
+  border-radius:20px;
+  padding:10px 15px;
+  background:linear-gradient(90deg,#19d96b,#78ed20);
+  color:white;
+  font-weight:bold;
+  ">
+  ＋ Create Room
+  </button>
+</div>
 
+<div id="liveRoomsList" style="
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+">
+  <div style="
+  padding:25px 12px;
+  border-radius:18px;
+  background:#eee;
+  text-align:center;
+  color:#777;
+  grid-column:1/-1;
+  ">
+    🔎 No live rooms yet
+  </div>
+</div>
     </div>
 
   </div>
@@ -812,6 +818,20 @@ function openChat(){
     document.getElementById("homeScreen").classList.add("hidden");
     document.getElementById("inboxScreen").classList.remove("hidden");
     window.scrollTo(0, document.body.scrollHeight);
+}
+  function createRoom(){
+  const myId = localStorage.getItem("lifeId");
+  const myNameSaved = localStorage.getItem("lifeName") || "User";
+
+  if(!myId){
+    alert("Please login first.");
+    return;
+  }
+
+  document.getElementById("name").value = myNameSaved;
+  document.getElementById("room").value = myId;
+
+  openRooms();
 }
 function openPrivateChat(name){
     const chat = document.createElement("div");
