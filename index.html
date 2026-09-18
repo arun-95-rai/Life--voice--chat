@@ -295,15 +295,34 @@ style="aspect-ratio:1/1;border-radius:50%;background:rgba(60,60,60,.75);border:2
   let selectedSeat = 0;
 
 function selectSeat(seat){
+  const btn = document.querySelectorAll(".seat")[seat - 1];
+
+  if(!btn) return;
+
+  const isLocked = btn.dataset.locked !== "true";
+
+  btn.dataset.locked = isLocked;
+
+  btn.innerHTML =
+    (isLocked ? "🔒" : "🔓") +
+    "<br><small style='font-size:11px;color:white;'>" +
+    seat +
+    "</small>";
+
   selectedSeat = seat;
 
-  document.querySelectorAll(".seat").forEach((btn,index)=>{
-    btn.style.border = "2px solid transparent";
-
-    if(index === seat-1){
-      btn.style.border = "3px solid #00ff88";
-    }
+  document.querySelectorAll(".seat").forEach(b=>{
+    b.style.border = "2px solid rgba(0,255,255,.25)";
   });
+
+  btn.style.border = "3px solid #00ffff";
+
+  msg(
+    isLocked
+      ? "🔒 Seat " + seat + " locked"
+      : "🔓 Seat " + seat + " unlocked"
+  );
+}
 
   msg("🪑 Seat " + seat + " selected");
 }
