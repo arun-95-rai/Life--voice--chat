@@ -420,27 +420,38 @@ function backHome(){
     document.getElementById("homeScreen").classList.remove("hidden");
 }
 function loginUser(){
-  const user = document.getElementById("loginUser").value.trim();
-  const pass = document.getElementById("loginPass").value.trim();
+  const phone = document.getElementById("loginUser").value.trim();
+  const pass = document.getElementById("loginPass").value;
 
-  if(!user || !pass){
-    alert("Please enter User ID and Password");
+  if(!phone || !pass){
+    alert("Please enter Phone Number and Password");
+    return;
+  }
+
+  const savedPhone = localStorage.getItem("lifeUser");
+  const savedPass = localStorage.getItem("lifePass");
+
+  if(phone !== savedPhone || pass !== savedPass){
+    alert("Invalid Phone Number or Password");
     return;
   }
 
   document.getElementById("loginScreen").classList.add("hidden");
- document.getElementById("homeScreen").classList.remove("hidden"); 
+  document.getElementById("homeScreen").classList.remove("hidden");
 }
+
 
 function showSignup(){
   document.getElementById("loginScreen").classList.add("hidden");
   document.getElementById("signupScreen").classList.remove("hidden");
 }
 
+
 function showLogin(){
   document.getElementById("signupScreen").classList.add("hidden");
   document.getElementById("loginScreen").classList.remove("hidden");
 }
+
 
 function createAccount(){
   const name = document.getElementById("signupName").value.trim();
@@ -458,15 +469,20 @@ function createAccount(){
     return;
   }
 
+  localStorage.setItem("lifeName", name);
   localStorage.setItem("lifeUser", phone);
   localStorage.setItem("lifePass", pass);
-  localStorage.setItem("lifeName", name);
 
   alert("Account created successfully!");
 
+  document.getElementById("signupName").value = "";
+  document.getElementById("signupPhone").value = "";
+  document.getElementById("signupPass").value = "";
+  document.getElementById("signupConfirm").value = "";
+
   showLogin();
 }
-const status=document.getElementById("status");
+  const status=document.getElementById("status");
 const info=document.getElementById("info");
 const usersBox=document.getElementById("usersBox");
 const users=document.getElementById("users");
