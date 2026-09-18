@@ -278,7 +278,9 @@ addBothUsers(d.name);
 if(d.type==="chat"){
 addChatMessage(d.name,d.message);
 }
-
+if(d.type==="sticker"){
+  addChatMessage(d.name,d.sticker);
+}
 });
 
 call=peer.call(id,stream);
