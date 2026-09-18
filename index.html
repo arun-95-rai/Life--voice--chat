@@ -140,6 +140,10 @@ let data=null;
 let muted=false;
 let myName="";
 let room="";
+  function openRooms(){
+  document.getElementById("homeScreen").classList.add("hidden");
+  document.getElementById("roomScreen").classList.remove("hidden");
+}
 function loginUser(){
   const user = document.getElementById("loginUser").value.trim();
   const pass = document.getElementById("loginPass").value.trim();
