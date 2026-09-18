@@ -129,7 +129,59 @@ display:flex;justify-content:space-around;margin:30px 10px
 
 </div>
 <!-- INBOX END -->
+<!-- PROFILE START -->
+<div id="profileScreen" class="card hidden">
 
+<h2>👤 My Profile</h2>
+
+<div style="text-align:center;margin:20px 0;">
+  <div style="font-size:70px;">👤</div>
+
+  <h2 id="profileName">User</h2>
+
+  <p style="color:#aaa;">
+    🆔 ID: <b id="profileId"></b>
+  </p>
+</div>
+
+<div style="background:#211633;padding:15px;border-radius:15px;margin-bottom:15px;">
+  <b>📝 Bio</b>
+  <p id="profileBio">Hello everyone ❤️</p>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;">
+
+  <div>
+    <b id="friendCount">0</b>
+    <small>👥 Friends</small>
+  </div>
+
+  <div>
+    <b id="followingCount">0</b>
+    <small>➕ Following</small>
+  </div>
+
+  <div>
+    <b id="followerCount">0</b>
+    <small>👤 Followers</small>
+  </div>
+
+</div>
+
+<div style="margin-top:20px;text-align:center;">
+
+  <button type="button">❤️ CP</button>
+
+  <button type="button">👍 DP Like <span id="likeCount">0</span></button>
+
+</div>
+
+<button type="button" onclick="backHome()">
+🏠 Back Home
+</button>
+
+</div>
+<!-- PROFILE END -->
 <div id="roomScreen" class="card hidden">
 
 
