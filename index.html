@@ -213,6 +213,9 @@ conn.on("data",d=>{
   if(d.type==="chat"){
     addChatMessage(d.name,d.message);
   }
+  if(d.type==="sticker"){
+  addChatMessage(d.name,d.sticker);
+}
 });
 });
 
