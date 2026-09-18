@@ -537,14 +537,7 @@ document.getElementById("chatInput").addEventListener("keydown", function(e){
   }
 });
 
-// Receive chat messages
-if(data){
-  data.on("data", d=>{
-    if(d.type === "chat"){
-      addChatMessage(d.name, d.message);
-    }
-  });
-}
+
 </script>
 
 </body>
