@@ -977,7 +977,7 @@ msg("🟢 Room created. Waiting for another user...");
 
 addUser(myName);
 showControls();
-
+document.getElementById("joinPanel").classList.add("hidden");
 peer.on("connection",conn=>{
 data=conn;
 
