@@ -913,25 +913,140 @@ function openChat(){
   join();
   }
   function roomMenu(){
-  const choice = prompt(
-    "Room Settings:\n\n1 = Change Room Name\n2 = Change Background"
-  );
+  const old = document.getElementById("roomSettingsPanel");
+  if(old) old.remove();
 
-  if(choice === "1"){
-    const newName = prompt("New Room Name:");
-    if(newName){
-      const name = newName.trim().slice(0,30);
-      document.getElementById("roomTitle").textContent = name;
-    }
-  }
+  const panel = document.createElement("div");
+  panel.id = "roomSettingsPanel";
 
-  if(choice === "2"){
-    const bg = prompt("Enter background color (example: #120b18):");
-    if(bg){
-      document.getElementById("roomScreen").style.background = bg;
-    }
+  panel.style.cssText = `
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  `;
+
+  panel.innerHTML = `
+    <div style="
+      width:100%;
+      max-width:360px;
+      background:#171027;
+      color:white;
+      border-radius:18px;
+      padding:20px;
+      box-shadow:0 10px 40px rgba(0,0,0,.6);
+    ">
+
+      <div style="
+        font-size:20px;
+        font-weight:bold;
+        margin-bottom:18px;
+      ">
+        ⚙️ Room Settings
+      </div>
+
+      <label style="font-size:13px;color:#ccc;">
+        Room Name
+      </label>
+
+      <input id="settingRoomName"
+        maxlength="30"
+        value="${(document.getElementById("roomTitle").textContent || "").trim()}"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          margin-top:7px;
+          padding:12px;
+          border-radius:10px;
+          border:1px solid #555;
+          background:#0d0915;
+          color:white;
+          font-size:15px;
+        ">
+
+      <label style="
+        display:block;
+        font-size:13px;
+        color:#ccc;
+        margin-top:16px;
+      ">
+        Background Color
+      </label>
+
+      <input id="settingRoomBg"
+        type="text"
+        value="#120b18"
+        placeholder="#120b18"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          margin-top:7px;
+          padding:12px;
+          border-radius:10px;
+          border:1px solid #555;
+          background:#0d0915;
+          color:white;
+          font-size:15px;
+        ">
+
+      <div style="
+        display:flex;
+        gap:10px;
+        margin-top:20px;
+      ">
+
+        <button type="button"
+          onclick="document.getElementById('roomSettingsPanel').remove()"
+          style="
+            flex:1;
+            padding:12px;
+            border:0;
+            border-radius:10px;
+            background:#333;
+            color:white;
+            font-size:15px;
+          ">
+          Cancel
+        </button>
+
+        <button type="button"
+          onclick="
+            const n=document.getElementById('settingRoomName').value.trim().slice(0,30);
+            const bg=document.getElementById('settingRoomBg').value.trim();
+
+            if(n){
+              document.getElementById('roomTitle').textContent=n;
+            }
+
+            if(bg){
+              document.getElementById('roomScreen').style.background=bg;
+            }
+
+            document.getElementById('roomSettingsPanel').remove();
+          "
+          style="
+            flex:1;
+            padding:12px;
+            border:0;
+            border-radius:10px;
+            background:#6c35ff;
+            color:white;
+            font-size:15px;
+            font-weight:bold;
+          ">
+          Save
+        </button>
+
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(panel);
   }
-}
 function openPrivateChat(name){
     const chat = document.createElement("div");
 
