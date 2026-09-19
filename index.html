@@ -1216,6 +1216,7 @@ a.play().catch(()=>{});
 async function join(){
 
 myName=document.getElementById("name").value.trim();
+  myName=myName.slice(0,30);
 room=document.getElementById("room").value.trim();
 
 if(!myName||!room){
