@@ -1573,6 +1573,10 @@ users.innerHTML="";
 
 status.textContent="Ready to connect";
 }
+  function minimizeRoom(){
+  document.getElementById("roomScreen").classList.add("hidden");
+  document.getElementById("homeScreen").classList.remove("hidden");
+}
 // CHAT
 const chatBox = document.createElement("div");
 chatBox.innerHTML = `
