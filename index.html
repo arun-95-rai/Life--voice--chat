@@ -224,74 +224,59 @@ margin-bottom:14px;
   </button>
 </div>
 <div id="returnRoomBtn"
-onclick="returnToRoom()"
 style="
 display:none;
-width:100%;
-margin:0 0 12px 0;
-padding:12px;
-box-sizing:border-box;
-border-radius:16px;
-background:#fff;
-box-shadow:0 3px 12px rgba(0,0,0,.15);
-color:#222;
-align-items:center;
-justify-content:space-between;
+position:fixed;
+left:15px;
+top:180px;
+width:62px;
+height:62px;
+z-index:99999;
+border-radius:50%;
+background:#24104f;
+box-shadow:0 4px 15px rgba(0,0,0,.5);
+touch-action:none;
+user-select:none;
 ">
 
-  <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-
-    <div style="
-    width:48px;
-    height:48px;
-    border-radius:50%;
-    background:#eee;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
-    ">
-    🎤
-    </div>
-
-    <div style="min-width:0;">
-      <div id="miniRoomName" style="
-      font-weight:bold;
-      font-size:15px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      ">
-      Voice Room
-      </div>
-
-      <div id="miniRoomId" style="
-      font-size:11px;
-      color:#777;
-      margin-top:3px;
-      ">
-      Room ID
-      </div>
-    </div>
-
+  <div id="miniRoomDrag"
+  onclick="returnToRoom()"
+  style="
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  cursor:grab;
+  ">
+  🎤
   </div>
 
   <button
   type="button"
-  onclick="event.stopPropagation();leave();"
+  onclick="event.stopPropagation();leaveFromMiniRoom();"
   style="
-  width:40px;
-  height:40px;
+  position:absolute;
+  right:-5px;
+  top:-5px;
+  width:24px;
+  height:24px;
   border:0;
   border-radius:50%;
-  background:#eee;
-  color:#222;
-  font-size:20px;
+  background:#ff3333;
+  color:white;
+  font-size:14px;
+  font-weight:bold;
+  padding:0;
+  z-index:2;
   ">
   ✕
   </button>
 
 </div>
+
 <div id="liveRoomsList" style="
 display:grid;
 grid-template-columns:repeat(2,1fr);
@@ -1644,13 +1629,53 @@ status.textContent="Ready to connect";
   function minimizeRoom(){
   document.getElementById("roomScreen").classList.add("hidden");
   document.getElementById("homeScreen").classList.remove("hidden");
-  document.getElementById("returnRoomBtn").style.display="flex";
+  document.getElementById("returnRoomBtn").style.display="block";
   }
   function returnToRoom(){
   document.getElementById("homeScreen").classList.add("hidden");
   document.getElementById("roomScreen").classList.remove("hidden");
   document.getElementById("returnRoomBtn").style.display="none";
 }
+  function leaveFromMiniRoom(){
+  leave();
+  document.getElementById("returnRoomBtn").style.display="none";
+}
+  let miniDragging=false;
+let miniStartX=0;
+let miniStartY=0;
+let miniStartLeft=0;
+let miniStartTop=0;
+
+const miniRoom=document.getElementById("returnRoomBtn");
+
+miniRoom.addEventListener("pointerdown",function(e){
+  if(e.target.tagName==="BUTTON") return;
+
+  miniDragging=true;
+  miniStartX=e.clientX;
+  miniStartY=e.clientY;
+  miniStartLeft=miniRoom.offsetLeft;
+  miniStartTop=miniRoom.offsetTop;
+
+  miniRoom.setPointerCapture(e.pointerId);
+});
+
+miniRoom.addEventListener("pointermove",function(e){
+  if(!miniDragging) return;
+
+  let newLeft=miniStartLeft+(e.clientX-miniStartX);
+  let newTop=miniStartTop+(e.clientY-miniStartY);
+
+  newLeft=Math.max(0,Math.min(window.innerWidth-62,newLeft));
+  newTop=Math.max(0,Math.min(window.innerHeight-62,newTop));
+
+  miniRoom.style.left=newLeft+"px";
+  miniRoom.style.top=newTop+"px";
+});
+
+miniRoom.addEventListener("pointerup",function(){
+  miniDragging=false;
+});
 // CHAT
 const chatBox = document.createElement("div");
 chatBox.innerHTML = `
