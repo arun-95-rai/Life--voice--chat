@@ -1338,6 +1338,26 @@ if(savedPhoto){
   photo.style.display = "inline-block";
 }
 }
+  let lastProfileScrollY = 0;
+
+window.addEventListener("scroll", function(){
+  const profile = document.getElementById("profileScreen");
+  const actions = document.getElementById("profileActions");
+
+  if(!profile || !actions) return;
+  if(profile.classList.contains("hidden")) return;
+
+  const currentY = window.scrollY;
+
+  if(currentY > lastProfileScrollY + 5){
+    actions.style.display = "none";
+  }
+  else if(currentY < lastProfileScrollY - 5){
+    actions.style.display = "flex";
+  }
+
+  lastProfileScrollY = currentY;
+});
   function editProfile(){
 
   const btn = document.getElementById("editProfileBtn");
