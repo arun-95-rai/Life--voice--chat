@@ -223,7 +223,22 @@ margin-bottom:14px;
   ＋ Create Room
   </button>
 </div>
-
+<button id="returnRoomBtn"
+onclick="returnToRoom()"
+style="
+display:none;
+width:100%;
+margin:0 0 12px 0;
+padding:12px;
+border:0;
+border-radius:15px;
+background:#6c35ff;
+color:white;
+font-size:16px;
+font-weight:bold;
+">
+🎤 Return to Room
+</button>
 <div id="liveRoomsList" style="
 display:grid;
 grid-template-columns:repeat(2,1fr);
@@ -1576,6 +1591,12 @@ status.textContent="Ready to connect";
   function minimizeRoom(){
   document.getElementById("roomScreen").classList.add("hidden");
   document.getElementById("homeScreen").classList.remove("hidden");
+  document.getElementById("returnRoomBtn").style.display="block";
+  }
+  function returnToRoom(){
+  document.getElementById("homeScreen").classList.add("hidden");
+  document.getElementById("roomScreen").classList.remove("hidden");
+  document.getElementById("returnRoomBtn").style.display="none";
 }
 // CHAT
 const chatBox = document.createElement("div");
