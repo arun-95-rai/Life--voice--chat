@@ -912,6 +912,26 @@ function openChat(){
 
   join();
   }
+  function roomMenu(){
+  const choice = prompt(
+    "Room Settings:\n\n1 = Change Room Name\n2 = Change Background"
+  );
+
+  if(choice === "1"){
+    const newName = prompt("New Room Name:");
+    if(newName){
+      const name = newName.trim().slice(0,30);
+      document.getElementById("roomTitle").textContent = name;
+    }
+  }
+
+  if(choice === "2"){
+    const bg = prompt("Enter background color (example: #120b18):");
+    if(bg){
+      document.getElementById("roomScreen").style.background = bg;
+    }
+  }
+}
 function openPrivateChat(name){
     const chat = document.createElement("div");
 
