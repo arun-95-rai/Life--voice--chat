@@ -1884,7 +1884,7 @@ chatBox.innerHTML = `
 </div>
 `;
 
-document.body.appendChild(chatBox);
+document.getElementById("roomScreen").appendChild(chatBox);
 
 function addChatMessage(name, message){
   const messages = document.getElementById("messages");
