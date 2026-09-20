@@ -322,19 +322,21 @@ gap:12px;
   right:0;
   background:white;
   display:flex;
-  justify-contentspace-between;
+  justify-contentspace-around;
   align-items:center;
   padding:10px 5px;
   border-top:1px solid #ddd;
   z-index:100;
   ">
 
-    <button onclick="backhome()" style="background:none;border:0;font-size:25px;">
+    <button onclick="backhome()" style="background:none;border:0;font-size:25px;flex:1;
+text-align:center;">
       🤟
       <br><small>Explore</small>
     </button>
 
-    <button style="background:none;border:0;font-size:25px;">
+    <button style="background:none;border:0;font-size:25px;flex:1;
+text-align:center;">
       🪐
       <br><small>Discover</small>
     </button>
@@ -346,11 +348,13 @@ gap:12px;
     background:linear-gradient(135deg,#72ed20,#19d96b);
     color:white;
     font-size:32px;
+text-align:center;
     ">
       +
     </button>
 
-    <button onclick="openChat()" style="background:none;border:0;font-size:25px;">
+    <button onclick="openChat()" style="background:none;border:0;font-size:25px;flex:1;
+text-align:center;">
       💬
       <br><small>Message</small>
     </button>
