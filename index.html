@@ -1428,26 +1428,36 @@ if(savedPhoto){
   photo.style.display = "inline-block";
 }
 }
-  let lastProfileScrollY = 0;
+let lastProfileScrollTop = 0;
 
-window.addEventListener("scroll", function(){
-  const profile = document.getElementById("profileScreen");
-  const actions = document.getElementById("profileActions");
+const profileScreen = document.getElementById("profileScreen");
+const profileActions = document.getElementById("profileActions");
 
-  if(!profile || !actions) return;
-  if(profile.classList.contains("hidden")) return;
+if(profileScreen && profileActions){
 
-  const currentY = window.scrollY;
+  profileScreen.addEventListener("scroll", function(){
 
-  if(currentY > lastProfileScrollY + 5){
-    actions.style.display = "none";
-  }
-  else if(currentY < lastProfileScrollY - 5){
-    actions.style.display = "flex";
-  }
+    const currentTop = profileScreen.scrollTop;
 
-  lastProfileScrollY = currentY;
-});
+    // Profile open / top position par buttons visible
+    if(currentTop <= 5){
+      profileActions.style.display = "flex";
+    }
+
+    // Neeche scroll karne par hide
+    else if(currentTop > lastProfileScrollTop + 5){
+      profileActions.style.display = "none";
+    }
+
+    // Upar scroll karne par show
+    else if(currentTop < lastProfileScrollTop - 5){
+      profileActions.style.display = "flex";
+    }
+
+    lastProfileScrollTop = currentTop;
+  });
+
+}
   function editProfile(){
 
   const btn = document.getElementById("editProfileBtn");
