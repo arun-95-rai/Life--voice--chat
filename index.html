@@ -11,9 +11,14 @@
 import {
   getFirestore,
   doc,
+  getDoc,
   setDoc,
   updateDoc,
   arrayUnion
+  collection, 
+  query, 
+  where, 
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
   import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
   // TODO: Add SDKs for Firebase products that you want to use
