@@ -1563,6 +1563,7 @@ status.textContent=t;
   if(!text){
     results.innerHTML = "<p>Search name or ID.</p>";
     return;
+    saveSearchHistory(text);
   }
 
   results.innerHTML = "<p>🔍 Searching...</p>";
@@ -1801,35 +1802,37 @@ function openUserSearch(){
       "
     ></div>
 
-    <!-- SEARCH HISTORY -->
-    <div style="padding:18px 24px;">
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-      ">
-        <b style="font-size:20px;">Search history</b>
-        <span style="
-          color:#777;
-          font-size:15px;
-          cursor:pointer;
-        ">Clear</span>
-      </div>
+<!-- SEARCH HISTORY -->
+<div style="padding:18px 24px;">
 
-      <div style="
-        display:flex;
-        gap:10px;
-        flex-wrap:wrap;
-        margin-top:15px;
-      ">
-        <span style="
-          background:#f4f4f6;
-          padding:10px 18px;
-          border-radius:10px;
-          color:#777;
-        ">Arun</span>
-      </div>
-    </div>
+  <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  ">
+    <b style="font-size:20px;">Search history</b>
+
+    <span
+      onclick="clearSearchHistory()"
+      style="
+        color:#777;
+        font-size:15px;
+        cursor:pointer;
+      "
+    >Clear</span>
+  </div>
+
+  <div
+    id="searchHistory"
+    style="
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:15px;
+    "
+  ></div>
+
+</div>
 
     <!-- TOP SEARCH -->
     <div style="padding:0 24px 20px;">
@@ -1948,7 +1951,7 @@ function openUserSearch(){
   `;
 
   document.body.appendChild(box);
-
+renderSearchHistory();
   const input = document.getElementById("userSearchInput");
 
   input.focus();
@@ -1960,6 +1963,99 @@ function openUserSearch(){
   });
 
 }
+ function saveSearchHistory(text){
+
+  text = text.trim();
+
+  if(!text) return;
+
+  let history = JSON.parse(
+    localStorage.getItem("lifeSearchHistory") || "[]"
+  );
+
+  // Same search ko duplicate mat rakho
+  history = history.filter(item => item !== text);
+
+  // New search sabse upar
+  history.unshift(text);
+
+  // Sirf latest 10
+  history = history.slice(0,10);
+
+  localStorage.setItem(
+    "lifeSearchHistory",
+    JSON.stringify(history)
+  );
+
+  renderSearchHistory();
+}
+
+
+function renderSearchHistory(){
+
+  const box = document.getElementById("searchHistory");
+
+  if(!box) return;
+
+  let history = JSON.parse(
+    localStorage.getItem("lifeSearchHistory") || "[]"
+  );
+
+  if(history.length === 0){
+
+    box.innerHTML = `
+      <span style="
+        color:#aaa;
+        font-size:15px;
+      ">
+        No search history
+      </span>
+    `;
+
+    return;
+  }
+
+  box.innerHTML = history.map(item => `
+
+    <button
+      type="button"
+      onclick="searchFromHistory('${item.replace(/'/g,"\\'")}')"
+      style="
+        background:#f4f4f6;
+        border:0;
+        padding:10px 18px;
+        border-radius:10px;
+        color:#666;
+        font-size:15px;
+      "
+    >
+      ${item}
+    </button>
+
+  `).join("");
+}
+
+
+function searchFromHistory(text){
+
+  const input = document.getElementById("userSearchInput");
+
+  if(!input) return;
+
+  input.value = text;
+
+  input.focus();
+
+  searchUser();
+}
+
+
+function clearSearchHistory(){
+
+  localStorage.removeItem("lifeSearchHistory");
+
+  renderSearchHistory();
+} 
 
 function showProfile(){
   document.getElementById("homeScreen").classList.add("hidden");
