@@ -27,7 +27,15 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/12.19.0/firebas
   const app = initializeApp(firebaseConfig);
   window.db = getFirestore(app);
   window.auth = getAuth(app);
-
+window.saveUserToFirestore = async function(userId, name){
+  await setDoc(doc(window.db, "users", userId), {
+    id: userId,
+    name: name,
+    followers: [],
+    following: [],
+    createdAt: Date.now()
+  });
+};
 signInAnonymously(window.auth).catch((error) => {
   console.error("Firebase Auth Error:", error);
 });
@@ -1461,7 +1469,13 @@ localStorage.setItem("lifeId", userId);
   localStorage.setItem("lifeName", name);
   localStorage.setItem("lifeUser", phone);
   localStorage.setItem("lifePass", pass);
-
+saveUserToFirestore(userId, name)
+  .then(() => {
+    console.log("User saved to Firestore");
+  })
+  .catch((error) => {
+    console.error("Firestore save error:", error);
+  });
   alert("Account created successfully!");
 
   document.getElementById("signupName").value = "";
