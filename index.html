@@ -1578,13 +1578,23 @@ let lastProfileScrollTop = 0;
 
 const profileScreen = document.getElementById("profileScreen");
 const profileActions = document.getElementById("profileActions");
+const myId = localStorage.getItem("lifeId");
+const profileId = document.getElementById("profileId").textContent.trim();
 
+if(myId === profileId){
+  profileActions.style.display = "none";
+}else{
+  profileActions.style.display = "flex";
+}
 if(profileScreen && profileActions){
 
   profileScreen.addEventListener("scroll", function(){
 
     const currentTop = profileScreen.scrollTop;
-
+if(myId === profileId){
+  profileActions.style.display = "none";
+  return;
+}
     // Profile open / top position par buttons visible
     if(currentTop <= 5){
       profileActions.style.display = "flex";
