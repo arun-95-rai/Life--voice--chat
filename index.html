@@ -1690,6 +1690,51 @@ status.textContent=t;
       "<p style='color:red;'>❌ Search failed. Please try again.</p>";
   }
 }
+  async function openUserProfile(userId){
+
+  try{
+
+    const userRef = doc(window.db, "users", userId);
+    const userSnap = await getDoc(userRef);
+
+    if(!userSnap.exists()){
+      alert("User profile not found.");
+      return;
+    }
+
+    const user = userSnap.data();
+
+    document.getElementById("homeScreen").classList.add("hidden");
+    document.getElementById("profileScreen").classList.remove("hidden");
+
+    document.getElementById("profileName").textContent =
+      user.name || "User";
+
+    document.getElementById("profileId").textContent =
+      userId;
+
+    document.getElementById("profileBio").textContent =
+      user.bio || "Hello everyone ❤️";
+
+    // दूसरे user की profile पर Follow/Message दिखेंगे
+    const actions = document.getElementById("profileActions");
+    if(actions){
+      actions.style.display = "flex";
+    }
+
+    // Follow button
+    const followBtn = document.getElementById("followBtn");
+    if(followBtn){
+      followBtn.style.display = "block";
+    }
+
+  }catch(error){
+
+    console.error("Profile error:",error);
+    alert("Unable to open profile.");
+
+  }
+}
 function showProfile(){
   document.getElementById("homeScreen").classList.add("hidden");
   document.getElementById("profileScreen").classList.remove("hidden");
