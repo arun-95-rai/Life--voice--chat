@@ -8,7 +8,13 @@
 <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  updateDoc,
+  arrayUnion
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
   import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -1495,6 +1501,48 @@ const leaveBtn=document.getElementById("leave");
 function msg(t){
 status.textContent=t;
 }
+  async function followUser(){
+
+  const myId = localStorage.getItem("lifeId");
+  const targetId = document.getElementById("profileId").textContent.trim();
+
+  if(!myId){
+    alert("Please login first.");
+    return;
+  }
+
+  if(!targetId || targetId === "Not Available"){
+    alert("User ID not available.");
+    return;
+  }
+
+  if(myId === targetId){
+    alert("You cannot follow yourself.");
+    return;
+  }
+
+  try{
+
+    const myRef = doc(window.db, "users", myId);
+    const targetRef = doc(window.db, "users", targetId);
+
+    await updateDoc(myRef, {
+      following: arrayUnion(targetId)
+    });
+
+    await updateDoc(targetRef, {
+      followers: arrayUnion(myId)
+    });
+
+    alert("Followed successfully ❤️");
+
+  }catch(error){
+
+    console.error("Follow error:", error);
+    alert("Follow failed. Please try again.");
+
+  }
+  }
 function showProfile(){
   document.getElementById("homeScreen").classList.add("hidden");
   document.getElementById("profileScreen").classList.remove("hidden");
