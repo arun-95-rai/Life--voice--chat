@@ -1580,6 +1580,116 @@ status.textContent=t;
 
   }
   }
+  async function searchUser(){
+
+  const input = document.getElementById("userSearchInput");
+  const results = document.getElementById("searchResults");
+
+  const text = input.value.trim();
+
+  if(!text){
+    results.innerHTML = "<p>Search name or ID.</p>";
+    return;
+  }
+
+  results.innerHTML = "<p>🔍 Searching...</p>";
+
+  try{
+
+    let foundUsers = [];
+
+    // ID से search
+    if(/^\d+$/.test(text)){
+
+      const userRef = doc(window.db, "users", text);
+      const userSnap = await getDoc(userRef);
+
+      if(userSnap.exists()){
+        foundUsers.push({
+          id:text,
+          ...userSnap.data()
+        });
+      }
+
+    }else{
+
+      // Name से search
+      const usersRef = collection(window.db, "users");
+
+      const q = query(
+        usersRef,
+        where("name", "==", text)
+      );
+
+      const snapshot = await getDocs(q);
+
+      snapshot.forEach((item)=>{
+        foundUsers.push({
+          id:item.id,
+          ...item.data()
+        });
+      });
+    }
+
+    if(foundUsers.length === 0){
+      results.innerHTML =
+        "<p style='padding:12px;background:white;border-radius:12px;color:#555;'>❌ User not found</p>";
+      return;
+    }
+
+    results.innerHTML = "";
+
+    foundUsers.forEach((user)=>{
+
+      const name = user.name || "User";
+      const id = user.id;
+
+      results.innerHTML += `
+        <div style="
+          background:white;
+          margin:8px 0;
+          padding:12px;
+          border-radius:14px;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          gap:10px;
+          color:#222;
+        ">
+
+          <div>
+            <b style="font-size:17px;">👤 ${name}</b>
+            <br>
+            <small>ID: ${id}</small>
+          </div>
+
+          <button
+            type="button"
+            onclick="openUserProfile('${id}')"
+            style="
+              border:0;
+              border-radius:12px;
+              padding:10px 14px;
+              background:#39e600;
+              color:#111;
+              font-weight:bold;
+            "
+          >
+            View
+          </button>
+
+        </div>
+      `;
+    });
+
+  }catch(error){
+
+    console.error("Search error:",error);
+
+    results.innerHTML =
+      "<p style='color:red;'>❌ Search failed. Please try again.</p>";
+  }
+}
 function showProfile(){
   document.getElementById("homeScreen").classList.add("hidden");
   document.getElementById("profileScreen").classList.remove("hidden");
