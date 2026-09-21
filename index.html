@@ -1708,7 +1708,7 @@ status.textContent=t;
 
   }
 }
-  function openUserSearch(){
+function openUserSearch(){
 
   let oldBox = document.getElementById("userSearchOverlay");
 
@@ -1723,103 +1723,97 @@ status.textContent=t;
 
   box.style = `
     position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background:rgba(0,0,0,.75);
+    inset:0;
+    background:#fff;
     z-index:99999;
-    padding:70px 15px 20px;
-    box-sizing:border-box;
+    color:#222;
+    overflow-y:auto;
   `;
 
   box.innerHTML = `
     <div style="
+      position:sticky;
+      top:0;
       background:white;
-      border-radius:18px;
-      padding:15px;
-      color:#222;
-      max-width:500px;
-      margin:auto;
+      padding:18px 12px;
+      border-bottom:1px solid #eee;
+      z-index:2;
     ">
 
       <div style="
         display:flex;
         align-items:center;
-        justify-content:space-between;
-        margin-bottom:12px;
+        gap:10px;
       ">
-        <b style="font-size:20px;">🔍 Search User</b>
 
         <button
           type="button"
           onclick="document.getElementById('userSearchOverlay').remove()"
           style="
             border:0;
-            background:#eee;
-            border-radius:50%;
-            width:38px;
-            height:38px;
-            font-size:20px;
+            background:none;
+            font-size:30px;
+            padding:0 8px;
           "
-        >✕</button>
-      </div>
-
-      <div style="display:flex;gap:8px;">
+        >←</button>
 
         <input
           id="userSearchInput"
           type="text"
-          placeholder="Enter Name or User ID"
+          autocomplete="off"
+          placeholder="Search users/rooms/channels/topics"
           style="
             flex:1;
-            padding:13px;
-            border:1px solid #ccc;
-            border-radius:12px;
-            font-size:16px;
-            color:#222;
-            background:white;
+            height:50px;
+            border:0;
             outline:none;
+            background:#f2f2f2;
+            border-radius:14px;
+            padding:0 16px;
+            font-size:17px;
+            color:#222;
           "
         >
 
         <button
           type="button"
-          onclick="searchUser()"
+          onclick="document.getElementById('userSearchInput').value='';document.getElementById('searchResults').innerHTML='';"
           style="
-            padding:0 15px;
             border:0;
-            border-radius:12px;
-            background:#39e600;
-            color:#111;
-            font-weight:bold;
+            background:none;
+            font-size:22px;
+            color:#888;
           "
-        >Search</button>
+        >✕</button>
 
       </div>
 
-      <div
-        id="searchResults"
-        style="
-          margin-top:12px;
-          max-height:60vh;
-          overflow-y:auto;
-        "
-      ></div>
-
     </div>
+
+    <div
+      id="searchResults"
+      style="
+        padding:12px;
+        min-height:100px;
+      "
+    ></div>
   `;
 
   document.body.appendChild(box);
 
-  document.getElementById("userSearchInput").focus();
+  const input = document.getElementById("userSearchInput");
 
-  document.getElementById("userSearchInput")
-    .addEventListener("keydown",function(e){
-      if(e.key === "Enter"){
-        searchUser();
-      }
-    });
+  input.focus();
+
+  input.addEventListener("keydown",function(e){
+
+    if(e.key === "Enter"){
+      e.preventDefault();
+      searchUser();
+    }
+
+  });
+
 }
 function showProfile(){
   document.getElementById("homeScreen").classList.add("hidden");
