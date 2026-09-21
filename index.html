@@ -180,7 +180,39 @@ min-height:100vh;
     ">⌕</button>
 
   </div>
+<!-- USER SEARCH -->
+<div style="margin:10px 14px;display:flex;gap:8px;">
+  <input
+    id="userSearchInput"
+    type="text"
+    placeholder="🔍 Search by Name or ID"
+    style="
+      flex:1;
+      padding:13px;
+      border:0;
+      border-radius:14px;
+      font-size:15px;
+      outline:none;
+    "
+  >
 
+  <button
+    type="button"
+    onclick="searchUser()"
+    style="
+      padding:0 18px;
+      border:0;
+      border-radius:14px;
+      background:#39e600;
+      color:#111;
+      font-weight:bold;
+    "
+  >
+    Search
+  </button>
+</div>
+
+<div id="searchResults" style="margin:0 14px;"></div>
   <!-- TOP STAR BANNER -->
   <div style="
   margin:8px 14px;
