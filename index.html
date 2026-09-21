@@ -1728,34 +1728,34 @@ function openUserSearch(){
     z-index:99999;
     color:#222;
     overflow-y:auto;
+    font-family:Arial,sans-serif;
   `;
 
   box.innerHTML = `
+
+    <!-- SEARCH BAR -->
     <div style="
       position:sticky;
       top:0;
+      z-index:10;
       background:white;
-      padding:18px 12px;
-      border-bottom:1px solid #eee;
-      z-index:2;
+      padding:18px 18px 12px;
     ">
 
       <div style="
+        height:58px;
+        background:#f2f2f2;
+        border-radius:30px;
         display:flex;
         align-items:center;
-        gap:10px;
+        padding:0 18px;
+        box-shadow:0 1px 5px rgba(0,0,0,.05);
       ">
 
-        <button
-          type="button"
-          onclick="document.getElementById('userSearchOverlay').remove()"
-          style="
-            border:0;
-            background:none;
-            font-size:30px;
-            padding:0 8px;
-          "
-        >←</button>
+        <span style="
+          font-size:30px;
+          margin-right:12px;
+        ">🔍</span>
 
         <input
           id="userSearchInput"
@@ -1764,55 +1764,468 @@ function openUserSearch(){
           placeholder="Search users/rooms/channels/topics"
           style="
             flex:1;
-            height:50px;
+            height:100%;
             border:0;
             outline:none;
-            background:#f2f2f2;
-            border-radius:14px;
-            padding:0 16px;
-            font-size:17px;
+            background:transparent;
+            font-size:18px;
             color:#222;
           "
         >
-
-        <button
-          type="button"
-          onclick="document.getElementById('userSearchInput').value='';document.getElementById('searchResults').innerHTML='';"
-          style="
-            border:0;
-            background:none;
-            font-size:22px;
-            color:#888;
-          "
-        >✕</button>
 
       </div>
 
     </div>
 
-    <div
-      id="searchResults"
-      style="
-        padding:12px;
-        min-height:100px;
-      "
-    ></div>
+
+    <!-- SEARCH CONTENT -->
+    <div style="padding:10px 24px 40px;">
+
+
+      <!-- SEARCH HISTORY -->
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-top:12px;
+      ">
+
+        <b style="font-size:21px;">
+          Search history
+        </b>
+
+        <span
+          onclick="localStorage.removeItem('lifeSearchHistory');"
+          style="
+            color:#1683e8;
+            font-size:17px;
+            cursor:pointer;
+          "
+        >
+          Clear
+        </span>
+
+      </div>
+
+
+      <div id="searchHistory"
+        style="
+          display:flex;
+          flex-wrap:wrap;
+          gap:10px;
+          margin-top:18px;
+        "
+      ></div>
+
+
+      <!-- TOP SEARCH -->
+      <div style="
+        margin-top:38px;
+        font-size:21px;
+        font-weight:bold;
+      ">
+        Top Search
+      </div>
+
+      <div style="
+        display:flex;
+        flex-wrap:wrap;
+        gap:10px;
+        margin-top:16px;
+      ">
+
+        <span style="
+          background:#f3f3f3;
+          padding:12px 20px;
+          border-radius:10px;
+        ">121</span>
+
+        <span style="
+          background:#f3f3f3;
+          padding:12px 20px;
+          border-radius:10px;
+        ">haryana</span>
+
+        <span style="
+          background:#f3f3f3;
+          padding:12px 20px;
+          border-radius:10px;
+        ">❤️</span>
+
+        <span style="
+          background:#f3f3f3;
+          padding:12px 20px;
+          border-radius:10px;
+        ">english</span>
+
+        <span style="
+          background:#f3f3f3;
+          padding:12px 20px;
+          border-radius:10px;
+        ">telugu</span>
+
+      </div>
+
+
+      <!-- SUGGESTED PARTIES -->
+      <div style="
+        margin-top:38px;
+        font-size:21px;
+        font-weight:bold;
+      ">
+        Suggested Parties
+      </div>
+
+
+      <div style="
+        display:flex;
+        gap:14px;
+        overflow-x:auto;
+        padding:16px 0 8px;
+      ">
+
+        <div style="
+          min-width:260px;
+          height:220px;
+          background:#e5f3ff;
+          border-radius:22px;
+          padding:22px;
+          box-sizing:border-box;
+          display:flex;
+          flex-direction:column;
+          justify-content:space-between;
+        ">
+
+          <b style="font-size:22px;">
+            MUSIC<br>
+            MEDICINE 🌑
+          </b>
+
+          <button style="
+            align-self:flex-start;
+            border:0;
+            background:#1683e8;
+            color:white;
+            border-radius:30px;
+            padding:12px 25px;
+            font-size:17px;
+            font-weight:bold;
+          ">
+            👤 Chat
+          </button>
+
+        </div>
+
+
+        <div style="
+          min-width:260px;
+          height:220px;
+          background:#e5f3ff;
+          border-radius:22px;
+          padding:22px;
+          box-sizing:border-box;
+          display:flex;
+          flex-direction:column;
+          justify-content:space-between;
+        ">
+
+          <b style="font-size:22px;">
+            EVIL DEAD RISE
+          </b>
+
+          <button style="
+            align-self:flex-start;
+            border:0;
+            background:#1683e8;
+            color:white;
+            border-radius:30px;
+            padding:12px 25px;
+            font-size:17px;
+            font-weight:bold;
+          ">
+            👤 Chat
+          </button>
+
+        </div>
+
+
+        <div style="
+          min-width:260px;
+          height:220px;
+          background:#e5f3ff;
+          border-radius:22px;
+          padding:22px;
+          box-sizing:border-box;
+          display:flex;
+          flex-direction:column;
+          justify-content:space-between;
+        ">
+
+          <b style="font-size:22px;">
+            VIBƎ KINGZ
+          </b>
+
+          <button style="
+            align-self:flex-start;
+            border:0;
+            background:#1683e8;
+            color:white;
+            border-radius:30px;
+            padding:12px 25px;
+            font-size:17px;
+            font-weight:bold;
+          ">
+            👤 Chat
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- SEARCH RESULTS -->
+      <div
+        id="searchResults"
+        style="
+          margin-top:20px;
+        "
+      ></div>
+
+
+      <!-- CHANNEL -->
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-top:28px;
+      ">
+
+        <b style="font-size:21px;">
+          Channel
+        </b>
+
+        <span style="
+          color:#1683e8;
+          font-size:17px;
+        ">
+          See All
+        </span>
+
+      </div>
+
+
+      <div style="
+        margin-top:18px;
+      ">
+
+        <div style="
+          display:flex;
+          align-items:center;
+          gap:14px;
+          padding:12px 0;
+        ">
+
+          <div style="
+            width:78px;
+            height:78px;
+            border-radius:16px;
+            background:#eee;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:35px;
+          ">
+            👩
+          </div>
+
+          <div style="flex:1;">
+
+            <b style="font-size:19px;">
+              लड़कियों का आश्रम*
+            </b>
+
+            <div style="
+              margin-top:8px;
+              color:#777;
+            ">
+              👤 309 &nbsp;
+              <span style="
+                background:#eee5ff;
+                color:#7950d8;
+                padding:5px 10px;
+                border-radius:10px;
+              ">
+                Other
+              </span>
+            </div>
+
+          </div>
+
+          <button style="
+            border:0;
+            background:#ffc928;
+            padding:12px 22px;
+            border-radius:25px;
+            font-size:16px;
+            font-weight:bold;
+          ">
+            Follow
+          </button>
+
+        </div>
+
+
+        <div style="
+          display:flex;
+          align-items:center;
+          gap:14px;
+          padding:12px 0;
+        ">
+
+          <div style="
+            width:78px;
+            height:78px;
+            border-radius:16px;
+            background:#eee;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:35px;
+          ">
+            👩
+          </div>
+
+          <div style="flex:1;">
+
+            <b style="font-size:19px;">
+              शायरी की दुनिया
+            </b>
+
+            <div style="
+              margin-top:8px;
+              color:#777;
+            ">
+              👤 124 &nbsp;
+              <span style="
+                background:#eee5ff;
+                color:#7950d8;
+                padding:5px 10px;
+                border-radius:10px;
+              ">
+                Chat
+              </span>
+            </div>
+
+          </div>
+
+          <button style="
+            border:0;
+            background:#ffc928;
+            padding:12px 22px;
+            border-radius:25px;
+            font-size:16px;
+            font-weight:bold;
+          ">
+            Follow
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
   `;
+
 
   document.body.appendChild(box);
 
-  const input = document.getElementById("userSearchInput");
+
+  /* SEARCH HISTORY */
+
+  const historyBox =
+    document.getElementById("searchHistory");
+
+  let history =
+    JSON.parse(
+      localStorage.getItem("lifeSearchHistory") || "[]"
+    );
+
+  history.slice(0,8).forEach(function(item){
+
+    const tag = document.createElement("span");
+
+    tag.textContent = item;
+
+    tag.style = `
+      background:#f3f3f3;
+      padding:12px 18px;
+      border-radius:10px;
+      font-size:16px;
+    `;
+
+    tag.onclick = function(){
+
+      document.getElementById(
+        "userSearchInput"
+      ).value = item;
+
+      searchUser();
+
+    };
+
+    historyBox.appendChild(tag);
+
+  });
+
+
+  /* INPUT */
+
+  const input =
+    document.getElementById("userSearchInput");
 
   input.focus();
 
-  input.addEventListener("keydown",function(e){
 
-    if(e.key === "Enter"){
-      e.preventDefault();
-      searchUser();
+  input.addEventListener(
+    "keydown",
+    function(e){
+
+      if(e.key === "Enter"){
+
+        e.preventDefault();
+
+        const value =
+          input.value.trim();
+
+        if(!value) return;
+
+        let oldHistory =
+          JSON.parse(
+            localStorage.getItem(
+              "lifeSearchHistory"
+            ) || "[]"
+          );
+
+        oldHistory =
+          oldHistory.filter(
+            x => x !== value
+          );
+
+        oldHistory.unshift(value);
+
+        localStorage.setItem(
+          "lifeSearchHistory",
+          JSON.stringify(
+            oldHistory.slice(0,8)
+          )
+        );
+
+        searchUser();
+
+      }
+
     }
-
-  });
+  );
 
 }
 function showProfile(){
