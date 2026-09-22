@@ -1972,10 +1972,8 @@ renderSearchHistory();
   });
 
 }
- function saveSearchHistory(text){
-
+function saveSearchHistory(text){
   text = text.trim();
-
   if(!text) return;
 
   let history = JSON.parse(
@@ -1988,7 +1986,7 @@ renderSearchHistory();
   // New search sabse upar
   history.unshift(text);
 
-  // Sirf latest 10
+  // Latest 10 searches
   history = history.slice(0,10);
 
   localStorage.setItem(
