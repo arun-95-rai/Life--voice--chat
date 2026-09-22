@@ -1563,9 +1563,12 @@ status.textContent=t;
   if(!text){
     results.innerHTML = "<p>Search name or ID.</p>";
     return;
-    saveSearchHistory(text);
-  }
+}
+
+saveSearchHistory(text);
 renderSearchHistory();
+
+results.innerHTML = "<p>🔍 Searching...</p>";
   results.innerHTML = "<p>🔍 Searching...</p>";
 
   try{
