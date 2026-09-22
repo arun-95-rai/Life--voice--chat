@@ -1557,13 +1557,9 @@ window.sendSignupOTP = async function(){
   const phoneInput = document.getElementById("signupPhone");
   const status = document.getElementById("otpStatus");
 
-  if(!phoneInput){
-    return;
-  }
+  if(!phoneInput) return;
 
   let phone = phoneInput.value.trim();
-
-  // India number ko +91 format me convert karo
   phone = phone.replace(/\s+/g,"");
 
   if(/^0\d{10}$/.test(phone)){
@@ -1579,9 +1575,71 @@ window.sendSignupOTP = async function(){
 
   try{
 
+    status.textContent = "⏳ Loading Firebase...";
+
+    const firebaseApp =
+      await import(
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"
+      );
+
+    const firebaseAuth =
+      await import(
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js"
+      );
+
+    const apps = firebaseApp.getApps();
+
+    let app;
+
+    if(apps.length > 0){
+      app = firebaseApp.getApp();
+    }else{
+
+      const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "life-voice-chat.firebaseapp.com",
+        projectId: "life-voice-chat",
+        storageBucket: "life-voice-chat.firebasestorage.app",
+        messagingSenderId: "595515385773",
+        appId: "1:595515385773:web:0c6ab62bae75e8a33be324"
+      };
+
+      app = firebaseApp.initializeApp(firebaseConfig);
+    }
+
+    const auth = firebaseAuth.getAuth(app);
+
+    if(signupRecaptchaVerifier){
+      try{
+        signupRecaptchaVerifier.clear();
+      }catch(e){}
+    }
+
+    signupRecaptchaVerifier =
+      new firebaseAuth.RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "normal",
+
+          callback: function(){
+            console.log("reCAPTCHA verified");
+          },
+
+          "expired-callback": function(){
+            console.log("reCAPTCHA expired");
+          }
+        }
+      );
+
     status.textContent = "⏳ Sending OTP...";
-signupConfirmationResult =
-  await window.sendPhoneOTP(phone);
+
+    signupConfirmationResult =
+      await firebaseAuth.signInWithPhoneNumber(
+        auth,
+        phone,
+        signupRecaptchaVerifier
+      );
 
     status.textContent =
       "✅ OTP sent. Please check your SMS.";
@@ -1597,7 +1655,7 @@ signupConfirmationResult =
 
     alert(
       "OTP send failed: " +
-      (error.message || error.code)
+      (error.message || error.code || error)
     );
 
     if(signupRecaptchaVerifier){
@@ -1609,7 +1667,6 @@ signupConfirmationResult =
     }
   }
 };
-
 
 window.verifySignupOTP = async function(){
 
