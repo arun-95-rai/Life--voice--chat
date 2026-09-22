@@ -43,16 +43,16 @@ import {
   const app = initializeApp(firebaseConfig);
   window.db = getFirestore(app);
   window.auth = getAuth(app);
-  window.createRecaptchaVerifier = function(){
+  window.createRecaptchaVerifier = () => {
   return new RecaptchaVerifier(
     window.auth,
     "recaptcha-container",
     {
       size: "normal",
-      callback: function(){
+      callback: () => {
         console.log("reCAPTCHA verified");
       },
-      "expired-callback": function(){
+      "expired-callback": () => {
         console.log("reCAPTCHA expired");
       }
     }
