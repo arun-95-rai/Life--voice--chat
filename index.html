@@ -43,10 +43,34 @@ import {
   const app = initializeApp(firebaseConfig);
   window.db = getFirestore(app);
   window.auth = getAuth(app);
-window.RecaptchaVerifier = RecaptchaVerifier;
+window.sendPhoneOTP = async function(phone){
 
+  if(!window.signupRecaptchaVerifier){
 
-window.signInWithPhoneNumber = signInWithPhoneNumber;
+    window.signupRecaptchaVerifier =
+      new RecaptchaVerifier(
+        window.auth,
+        "recaptcha-container",
+        {
+          size: "normal",
+          callback: function(){
+            console.log("reCAPTCHA verified");
+          },
+          "expired-callback": function(){
+            console.log("reCAPTCHA expired");
+          }
+        }
+      );
+
+    await window.signupRecaptchaVerifier.render();
+  }
+
+  return await signInWithPhoneNumber(
+    window.auth,
+    phone,
+    window.signupRecaptchaVerifier
+  );
+};
 window.saveUserToFirestore = async function(userId, name){
   await setDoc(doc(window.db, "users", userId), {
     id: userId,
@@ -1559,32 +1583,8 @@ window.sendSignupOTP = async function(){
   try{
 
     status.textContent = "⏳ Sending OTP...";
-
-    if(!signupRecaptchaVerifier){
-
-     signupRecaptchaVerifier = new window.RecaptchaVerifier(
-  window.auth,
-  "recaptcha-container",
-  {
-    size: "normal",
-    callback: function(){
-      console.log("reCAPTCHA verified");
-    },
-    "expired-callback": function(){
-      status.textContent = "⚠️ reCAPTCHA expired. Please try again.";
-    }
-  }
-);
-
-await signupRecaptchaVerifier.render(); 
-    }
-
-    signupConfirmationResult =
-      await window.signInWithPhoneNumber(
-        window.auth,
-        phone,
-        signupRecaptchaVerifier
-      );
+signupConfirmationResult =
+  await window.sendPhoneOTP(phone);
 
     status.textContent =
       "✅ OTP sent. Please check your SMS.";
