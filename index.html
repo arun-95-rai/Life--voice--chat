@@ -43,7 +43,23 @@ import {
   const app = initializeApp(firebaseConfig);
   window.db = getFirestore(app);
   window.auth = getAuth(app);
-  window.RecaptchaVerifier = RecaptchaVerifier;
+  window.createRecaptchaVerifier = function(){
+  return new RecaptchaVerifier(
+    window.auth,
+    "recaptcha-container",
+    {
+      size: "normal",
+      callback: function(){
+        console.log("reCAPTCHA verified");
+      },
+      "expired-callback": function(){
+        console.log("reCAPTCHA expired");
+      }
+    }
+  );
+};
+
+
 window.signInWithPhoneNumber = signInWithPhoneNumber;
 window.saveUserToFirestore = async function(userId, name){
   await setDoc(doc(window.db, "users", userId), {
