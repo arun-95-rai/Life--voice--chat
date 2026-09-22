@@ -45,30 +45,26 @@ import {
   window.auth = getAuth(app);
 window.sendPhoneOTP = async function(phone){
 
-  if(!window.signupRecaptchaVerifier){
+  const verifier = new RecaptchaVerifier(
+    window.auth,
+    "recaptcha-container",
+    {
+      size: "normal",
+      callback: function(){
+        console.log("reCAPTCHA verified");
+      },
+      "expired-callback": function(){
+        console.log("reCAPTCHA expired");
+      }
+    }
+  );
 
-    window.signupRecaptchaVerifier =
-      new RecaptchaVerifier(
-        window.auth,
-        "recaptcha-container",
-        {
-          size: "normal",
-          callback: function(){
-            console.log("reCAPTCHA verified");
-          },
-          "expired-callback": function(){
-            console.log("reCAPTCHA expired");
-          }
-        }
-      );
-
-    await window.signupRecaptchaVerifier.render();
-  }
+  await verifier.render();
 
   return await signInWithPhoneNumber(
     window.auth,
     phone,
-    window.signupRecaptchaVerifier
+    verifier
   );
 };
 window.saveUserToFirestore = async function(userId, name){
