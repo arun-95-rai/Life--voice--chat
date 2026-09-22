@@ -1525,7 +1525,138 @@ function showLogin(){
   document.getElementById("loginScreen").classList.remove("hidden");
 }
 
+let signupConfirmationResult = null;
+let signupRecaptchaVerifier = null;
+let signupPhoneVerified = false;
 
+window.sendSignupOTP = async function(){
+
+  const phoneInput = document.getElementById("signupPhone");
+  const status = document.getElementById("otpStatus");
+
+  if(!phoneInput){
+    return;
+  }
+
+  let phone = phoneInput.value.trim();
+
+  // India number ko +91 format me convert karo
+  phone = phone.replace(/\s+/g,"");
+
+  if(/^0\d{10}$/.test(phone)){
+    phone = "+91" + phone.substring(1);
+  }else if(/^\d{10}$/.test(phone)){
+    phone = "+91" + phone;
+  }
+
+  if(!/^\+91\d{10}$/.test(phone)){
+    alert("Please enter a valid 10 digit Indian mobile number.");
+    return;
+  }
+
+  try{
+
+    status.textContent = "⏳ Sending OTP...";
+
+    if(!signupRecaptchaVerifier){
+
+      signupRecaptchaVerifier = new window.RecaptchaVerifier(
+        window.auth,
+        "recaptcha-container",
+        {
+          size: "normal",
+          callback: function(){
+            console.log("reCAPTCHA verified");
+          },
+          "expired-callback": function(){
+            status.textContent = "⚠️ reCAPTCHA expired. Please try again.";
+          }
+        }
+      );
+
+      await signupRecaptchaVerifier.render();
+    }
+
+    signupConfirmationResult =
+      await window.signInWithPhoneNumber(
+        window.auth,
+        phone,
+        signupRecaptchaVerifier
+      );
+
+    status.textContent =
+      "✅ OTP sent. Please check your SMS.";
+
+    alert("OTP sent successfully.");
+
+  }catch(error){
+
+    console.error("OTP error:", error);
+
+    status.textContent =
+      "❌ OTP send failed.";
+
+    alert(
+      "OTP send failed: " +
+      (error.message || error.code)
+    );
+
+    if(signupRecaptchaVerifier){
+      try{
+        signupRecaptchaVerifier.clear();
+      }catch(e){}
+
+      signupRecaptchaVerifier = null;
+    }
+  }
+};
+
+
+window.verifySignupOTP = async function(){
+
+  const otpInput = document.getElementById("signupOtp");
+  const status = document.getElementById("otpStatus");
+
+  if(!signupConfirmationResult){
+    alert("Please tap Get Code first.");
+    return;
+  }
+
+  const otp = otpInput.value.trim();
+
+  if(!/^\d{6}$/.test(otp)){
+    alert("Please enter the 6 digit OTP.");
+    return;
+  }
+
+  try{
+
+    status.textContent = "⏳ Verifying OTP...";
+
+    const result =
+      await signupConfirmationResult.confirm(otp);
+
+    console.log("Phone verified:", result.user.uid);
+
+    signupPhoneVerified = true;
+
+    status.textContent =
+      "✅ Phone number verified successfully.";
+
+    alert("Phone number verified successfully.");
+
+  }catch(error){
+
+    console.error("OTP verification error:", error);
+
+    signupPhoneVerified = false;
+
+    status.textContent =
+      "❌ Invalid OTP.";
+
+    alert("Invalid OTP. Please check and try again.");
+  }
+};
 function createAccount(){
   const name = document.getElementById("signupName").value.trim();
   const phone = document.getElementById("signupPhone").value.trim();
