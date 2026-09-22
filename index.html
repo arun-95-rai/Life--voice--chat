@@ -43,6 +43,7 @@ import {
   const app = initializeApp(firebaseConfig);
   window.db = getFirestore(app);
   window.auth = getAuth(app);
+  window.firebaseModuleLoaded = true;
 window.sendPhoneOTP = async function(phone){
 
   const verifier = new RecaptchaVerifier(
