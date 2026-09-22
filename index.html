@@ -43,21 +43,7 @@ import {
   const app = initializeApp(firebaseConfig);
   window.db = getFirestore(app);
   window.auth = getAuth(app);
-  window.createRecaptchaVerifier = () => {
-  return new RecaptchaVerifier(
-    window.auth,
-    "recaptcha-container",
-    {
-      size: "normal",
-      callback: () => {
-        console.log("reCAPTCHA verified");
-      },
-      "expired-callback": () => {
-        console.log("reCAPTCHA expired");
-      }
-    }
-  );
-};
+window.RecaptchaVerifier = RecaptchaVerifier;
 
 
 window.signInWithPhoneNumber = signInWithPhoneNumber;
@@ -1576,10 +1562,21 @@ window.sendSignupOTP = async function(){
 
     if(!signupRecaptchaVerifier){
 
-      signupRecaptchaVerifier =
-  window.createRecaptchaVerifier();
+     signupRecaptchaVerifier = new window.RecaptchaVerifier(
+  window.auth,
+  "recaptcha-container",
+  {
+    size: "normal",
+    callback: function(){
+      console.log("reCAPTCHA verified");
+    },
+    "expired-callback": function(){
+      status.textContent = "⚠️ reCAPTCHA expired. Please try again.";
+    }
+  }
+);
 
-await signupRecaptchaVerifier.render();
+await signupRecaptchaVerifier.render(); 
     }
 
     signupConfirmationResult =
