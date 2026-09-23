@@ -69,13 +69,35 @@ window.sendPhoneOTP = async function(phone){
   );
 };
 window.saveUserToFirestore = async function(userId, name){
-  await setDoc(doc(window.db, "users", userId), {
-    id: userId,
-    name: name,
-    followers: [],
-    following: [],
-    createdAt: Date.now()
-  });
+
+  try {
+
+    if(!window.auth.currentUser){
+      await signInAnonymously(window.auth);
+    }
+
+    await setDoc(
+      doc(window.db, "users", userId),
+      {
+        id: userId,
+        name: name,
+        followers: [],
+        following: [],
+        createdAt: Date.now()
+      }
+    );
+
+    console.log("User saved to Firestore:", userId);
+
+    return true;
+
+  } catch(error) {
+
+    console.error("Firestore save error:", error);
+
+    throw error;
+  }
+};
 };
 signInAnonymously(window.auth).catch((error) => {
   console.error("Firebase Auth Error:", error);
