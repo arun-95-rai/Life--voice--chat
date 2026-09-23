@@ -107,6 +107,23 @@ signInAnonymously(window.auth).catch((error) => {
   console.error("Firebase Auth Error:", error);
 });
 </script>
+  <script>
+window.firebaseReadyCheck = function(){
+  alert(
+    "Firebase module: " +
+    (window.firebaseModuleLoaded ? "LOADED" : "NOT LOADED") +
+    "\nFirestore function: " +
+    (window.saveUserToFirestore ? "LOADED" : "NOT LOADED")
+  );
+};
+</script>
+  <button
+  type="button"
+  onclick="firebaseReadyCheck()"
+  style="position:fixed;top:10px;right:10px;z-index:99999;"
+>
+  Test Firebase
+</button>
 <style>
   #seats .seat{
   width:58px !important;
