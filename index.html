@@ -2509,9 +2509,15 @@ function showProfile(){
   document.getElementById("profileName").textContent = name;
   document.getElementById("profileId").textContent = id;
 
-  const bio = localStorage.getItem("lifeBio") || "Hello everyone ❤️";
+  const myId = localStorage.getItem("lifeId");
+
+const bio = myId
+  ? localStorage.getItem("lifeBio_" + myId) || "Hello everyone ❤️"
+  : "Hello everyone ❤️";
 document.getElementById("profileBio").textContent = bio;
-const savedCover = localStorage.getItem("lifeCover");
+const savedCover = myId
+  ? localStorage.getItem("lifeCover_" + myId)
+  : null;
 
 if(savedCover){
   const cover = document.getElementById("profileCover");
@@ -2522,7 +2528,7 @@ if(savedCover){
     cover.style.backgroundPosition = "center";
   }
 }
-const myId = localStorage.getItem("lifeId");
+
 const savedPhoto = myId
   ? localStorage.getItem("lifePhoto_" + myId)
   : null;
@@ -2541,7 +2547,7 @@ let lastProfileScrollTop = 0;
 
 const profileScreen = document.getElementById("profileScreen");
 const profileActions = document.getElementById("profileActions");
-const myId = localStorage.getItem("lifeId");
+
 const profileId = document.getElementById("profileId").textContent.trim();
 
 if(myId === profileId){
@@ -2592,7 +2598,14 @@ if(myId === profileId){
       cover.style.backgroundPosition = "center";
     }
 
-    localStorage.setItem("lifeCover", e.target.result);
+    const myId = localStorage.getItem("lifeId");
+
+if(myId){
+  localStorage.setItem(
+    "lifeCover_" + myId,
+    e.target.result
+  );
+}
   };
 
   reader.readAsDataURL(file);
@@ -2645,12 +2658,23 @@ if(myId){
     }
 
     localStorage.setItem("lifeName", newName);
-    localStorage.setItem("lifeBio", newBio);
+    const myId = localStorage.getItem("lifeId");
+
+if(myId){
+  localStorage.setItem("lifeBio_" + myId, newBio);
+}
 
     const photo = document.getElementById("profilePhoto");
 
     if(photo && photo.src && photo.style.display !== "none"){
-      localStorage.setItem("lifePhoto", photo.src);
+      const myId = localStorage.getItem("lifeId");
+
+if(myId){
+  localStorage.setItem(
+    "lifePhoto_" + myId,
+    photo.src
+  );
+}
     }
 
     nameEl.textContent = newName;
