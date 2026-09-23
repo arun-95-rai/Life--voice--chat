@@ -1754,7 +1754,12 @@ async function createAccount(){
 
   const userId =
     Math.floor(10000000 + Math.random() * 90000000).toString();
-
+// New account = fresh profile
+localStorage.removeItem("lifePhoto");
+localStorage.removeItem("lifeBio");
+localStorage.removeItem("lifeCover");
+localStorage.removeItem("lifeCp");
+localStorage.removeItem("lifeDplike");
   try{
 
     // Save locally
@@ -1764,18 +1769,14 @@ async function createAccount(){
     localStorage.setItem("lifePass", pass);
 
     // Save user in Firebase Firestore
-    if(window.saveUserToFirestore){
+    if(!window.saveUserToFirestore){
+  alert("Firestore function not loaded.");
+  return;
+}
 
-      await window.saveUserToFirestore(userId, name);
+await window.saveUserToFirestore(userId, name);
 
-      console.log("User saved to Firestore:", userId);
-
-    }else{
-
-      console.warn("saveUserToFirestore function not found.");
-
-    }
-
+console.log("User saved to Firestore:", userId);
     alert(
       "Account created successfully!\n\nYour Life ID: " + userId
     );
