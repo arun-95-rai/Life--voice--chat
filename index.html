@@ -1713,42 +1713,67 @@ window.verifySignupOTP = async function(){
     alert("Invalid OTP. Please check and try again.");
   }
 };
-function createAccount(){
+async function createAccount(){
+
   const name = document.getElementById("signupName").value.trim();
   const phone = document.getElementById("signupPhone").value.trim();
   const pass = document.getElementById("signupPass").value;
   const confirm = document.getElementById("signupConfirm").value;
 
   if(!name || !phone || !pass || !confirm){
-    alert("Please fill all details");
+    alert("Please fill all details.");
     return;
   }
 
   if(pass !== confirm){
-    alert("Password does not match");
+    alert("Password does not match.");
     return;
   }
-const userId = Math.floor(10000000 + Math.random() * 90000000);
 
-localStorage.setItem("lifeId", userId);
-  localStorage.setItem("lifeName", name);
-  localStorage.setItem("lifeUser", phone);
-  localStorage.setItem("lifePass", pass);
-saveUserToFirestore(userId, name)
-  .then(() => {
-    console.log("User saved to Firestore");
-  })
-  .catch((error) => {
+  const userId =
+    Math.floor(10000000 + Math.random() * 90000000).toString();
+
+  try{
+
+    // Save locally
+    localStorage.setItem("lifeId", userId);
+    localStorage.setItem("lifeName", name);
+    localStorage.setItem("lifeUser", phone);
+    localStorage.setItem("lifePass", pass);
+
+    // Save user in Firebase Firestore
+    if(window.saveUserToFirestore){
+
+      await window.saveUserToFirestore(userId, name);
+
+      console.log("User saved to Firestore:", userId);
+
+    }else{
+
+      console.warn("saveUserToFirestore function not found.");
+
+    }
+
+    alert(
+      "Account created successfully!\n\nYour Life ID: " + userId
+    );
+
+    document.getElementById("signupName").value = "";
+    document.getElementById("signupPhone").value = "";
+    document.getElementById("signupPass").value = "";
+    document.getElementById("signupConfirm").value = "";
+
+    showLogin();
+
+  }catch(error){
+
     console.error("Firestore save error:", error);
-  });
-  alert("Account created successfully!");
 
-  document.getElementById("signupName").value = "";
-  document.getElementById("signupPhone").value = "";
-  document.getElementById("signupPass").value = "";
-  document.getElementById("signupConfirm").value = "";
-
-  showLogin();
+    alert(
+      "Account created, but Firestore save failed.\n\n" +
+      (error.message || error)
+    );
+  }
 }
   const status=document.getElementById("status");
 const info=document.getElementById("info");
