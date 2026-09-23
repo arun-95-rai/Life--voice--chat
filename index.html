@@ -5,107 +5,162 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Life Voice Chat</title>
 <script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
-<script type="module">h
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  arrayUnion
-  collection, 
-  query, 
-  where, 
-  getDocs
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-  import {
-  getAuth,
-  signInAnonymously,
-  RecaptchaVerifier,
-  signInWithPhoneNumber
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+<script type="module">
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyCPhLWnhCK8To6HVagVMruxpgglsxjWv60",
-    authDomain: "life-voice-chat.firebaseapp.com",
-    projectId: "life-voice-chat",
-    storageBucket: "life-voice-chat.firebasestorage.app",
-    messagingSenderId: "595515385773",
-    appId: "1:595515385773:web:0c6ab62bae75e8a33be324"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  window.db = getFirestore(app);
-  window.auth = getAuth(app);
-  window.firebaseModuleLoaded = true;
-window.sendPhoneOTP = async function(phone){
-
-  const verifier = new RecaptchaVerifier(
-    window.auth,
-    "recaptcha-container",
-    {
-      size: "normal",
-      callback: function(){
-        console.log("reCAPTCHA verified");
-      },
-      "expired-callback": function(){
-        console.log("reCAPTCHA expired");
-      }
-    }
-  );
-
-  await verifier.render();
-
-  return await signInWithPhoneNumber(
-    window.auth,
-    phone,
-    verifier
-  );
-};
-window.saveUserToFirestore = async function(userId, name){
-
-  if(!window.db){
-    throw new Error("Firestore database is not initialized.");
-  }
+(async function(){
 
   try{
 
-    if(!window.auth.currentUser){
-      await signInAnonymously(window.auth);
+    const firebaseApp =
+      await import(
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"
+      );
+
+    const firebaseFirestore =
+      await import(
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+      );
+
+    const firebaseAuth =
+      await import(
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js"
+      );
+
+    const {
+      initializeApp,
+      getApps,
+      getApp
+    } = firebaseApp;
+
+    const {
+      getFirestore,
+      doc,
+      setDoc,
+      getDoc,
+      updateDoc,
+      arrayUnion,
+      collection,
+      query,
+      where,
+      getDocs
+    } = firebaseFirestore;
+
+    const {
+      getAuth,
+      signInAnonymously,
+      RecaptchaVerifier,
+      signInWithPhoneNumber
+    } = firebaseAuth;
+
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCPhLwnChCKT86HvagVnuxpgglsXjwV60",
+      authDomain: "life-voice-chat.firebaseapp.com",
+      projectId: "life-voice-chat",
+      storageBucket: "life-voice-chat.firebasestorage.app",
+      messagingSenderId: "595515385773",
+      appId: "1:595515385773:web:0c6ab62bae75e8a33be324"
+    };
+
+
+    let app;
+
+    if(getApps().length > 0){
+
+      app = getApp();
+
+    }else{
+
+      app = initializeApp(firebaseConfig);
+
     }
 
-    await setDoc(
-      doc(window.db, "users", userId),
-      {
-        id: userId,
-        name: name,
-        followers: [],
-        following: [],
-        createdAt: Date.now()
+
+    window.db = getFirestore(app);
+
+    window.auth = getAuth(app);
+
+    window.firebaseModuleLoaded = true;
+
+
+    window.saveUserToFirestore = async function(userId, name){
+
+      if(!window.db){
+        throw new Error("Firestore database is not initialized.");
       }
-    );
 
-    console.log("✅ Firestore user saved:", userId);
+      if(!window.auth.currentUser){
 
-    return true;
+        await signInAnonymously(window.auth);
+
+      }
+
+      await setDoc(
+        doc(window.db, "users", userId),
+        {
+          id: userId,
+          name: name,
+          followers: [],
+          following: [],
+          createdAt: Date.now()
+        }
+      );
+
+      console.log(
+        "✅ Firestore user saved:",
+        userId
+      );
+
+      return true;
+    };
+
+
+    window.sendPhoneOTP = async function(phone){
+
+      const verifier =
+        new RecaptchaVerifier(
+          window.auth,
+          "recaptcha-container",
+          {
+            size: "normal",
+
+            callback: function(){
+              console.log("reCAPTCHA verified");
+            },
+
+            "expired-callback": function(){
+              console.log("reCAPTCHA expired");
+            }
+          }
+        );
+
+      await verifier.render();
+
+      return await signInWithPhoneNumber(
+        window.auth,
+        phone,
+        verifier
+      );
+    };
+
+
+    await signInAnonymously(window.auth);
+
+    console.log("✅ Firebase initialized successfully.");
 
   }catch(error){
 
-    console.error("❌ Firestore save error:", error);
+    console.error(
+      "❌ Firebase initialization error:",
+      error
+    );
 
-    throw error;
+    window.firebaseModuleLoaded = false;
+
   }
-};
-};
-signInAnonymously(window.auth).catch((error) => {
-  console.error("Firebase Auth Error:", error);
-});
+
+})();
+
 </script>
   <script>
 window.firebaseReadyCheck = function(){
