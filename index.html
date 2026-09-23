@@ -1875,7 +1875,7 @@ window.verifySignupOTP = async function(){
     alert("Invalid OTP. Please check and try again.");
   }
 };
-async function createAccount(){
+window.createAccount = async function(){
 
   const name = document.getElementById("signupName").value.trim();
   const phone = document.getElementById("signupPhone").value.trim();
