@@ -1892,33 +1892,40 @@ window.createAccount = async function(){
     return;
   }
 
+  if(pass.length < 6){
+    alert("Password must be at least 6 characters.");
+    return;
+  }
+
   const userId =
     Math.floor(10000000 + Math.random() * 90000000).toString();
-// New account = fresh profile
-localStorage.removeItem("lifePhoto");
-localStorage.removeItem("lifeBio");
-localStorage.removeItem("lifeCover");
-localStorage.removeItem("lifeCp");
-localStorage.removeItem("lifeDplike");
+
   try{
 
-    // Save locally
+    /* New account = fresh profile */
+    localStorage.removeItem("lifePhoto");
+    localStorage.removeItem("lifeBio");
+    localStorage.removeItem("lifeCover");
+    localStorage.removeItem("lifeCP");
+    localStorage.removeItem("lifeDplike");
+
+    /* Save new account locally */
     localStorage.setItem("lifeId", userId);
     localStorage.setItem("lifeName", name);
     localStorage.setItem("lifeUser", phone);
     localStorage.setItem("lifePass", pass);
 
-    // Save user in Firebase Firestore
+    /* Save user to Firestore */
     if(!window.saveUserToFirestore){
-  alert("Firestore function not loaded.");
-  return;
-}
+      alert("Firestore function not loaded.");
+      return;
+    }
 
-await window.saveUserToFirestore(userId, name);
+    await window.saveUserToFirestore(userId, name);
 
-console.log("User saved to Firestore:", userId);
     alert(
-      "Account created successfully!\n\nYour Life ID: " + userId
+      "Account created successfully!\n\n" +
+      "Your Life ID: " + userId
     );
 
     document.getElementById("signupName").value = "";
@@ -1930,14 +1937,14 @@ console.log("User saved to Firestore:", userId);
 
   }catch(error){
 
-    console.error("Firestore save error:", error);
+    console.error("Create account error:", error);
 
     alert(
-      "Account created, but Firestore save failed.\n\n" +
+      "Account creation failed.\n\n" +
       (error.message || error)
     );
   }
-}
+};
   const status=document.getElementById("status");
 const info=document.getElementById("info");
 const usersBox=document.getElementById("usersBox");
