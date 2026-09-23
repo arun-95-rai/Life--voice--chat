@@ -317,7 +317,12 @@ display:flex;justify-content:space-around;margin:30px 10px
 
   <p>OR</p>
 
-  <button onclick="showSignup()">✨ Create Account</button>
+  <button type="button" onclick="
+document.getElementById('loginScreen').classList.add('hidden');
+document.getElementById('signupScreen').classList.remove('hidden');
+">
+✨ Create Account
+  </button>
 </div>
   <div id="signupScreen" class="card hidden">
   <h2>✨ Create Account</h2>
