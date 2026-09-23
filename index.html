@@ -85,36 +85,47 @@
 
     window.saveUserToFirestore = async function(userId, name){
 
-      if(!window.db){
-        throw new Error("Firestore database is not initialized.");
-      }
+  if(!window.db){
+    throw new Error("Firestore database is not initialized.");
+  }
 
-      if(!window.auth.currentUser){
+  if(!window.auth.currentUser){
+    await signInAnonymously(window.auth);
+  }
 
-        await signInAnonymously(window.auth);
+  await setDoc(
+    doc(window.db, "users", userId),
+    {
+      id: userId,
+      name: name,
+      followers: [],
+      following: [],
+      createdAt: Date.now()
+    }
+  );
 
-      }
+  console.log("✅ Firestore user saved:", userId);
 
-      await setDoc(
-        doc(window.db, "users", userId),
-        {
-          id: userId,
-          name: name,
-          followers: [],
-          following: [],
-          createdAt: Date.now()
-        }
-      );
-
-      console.log(
-        "✅ Firestore user saved:",
-        userId
-      );
-
-      return true;
-    };
+  return true;
+};
 
 
+window.saveProfileToFirestore = async function(userId, profileData){
+
+  if(!window.db){
+    throw new Error("Firestore database is not initialized.");
+  }
+
+  await setDoc(
+    doc(window.db, "users", userId),
+    profileData,
+    { merge: true }
+  );
+
+  console.log("✅ Profile saved to Firestore:", userId);
+
+  return true;
+};
     window.sendPhoneOTP = async function(phone){
 
       const verifier =
