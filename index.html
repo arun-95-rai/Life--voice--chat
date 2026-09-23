@@ -2522,12 +2522,19 @@ if(savedCover){
     cover.style.backgroundPosition = "center";
   }
 }
-const savedPhoto = localStorage.getItem("lifePhoto");
+const myId = localStorage.getItem("lifeId");
+const savedPhoto = myId
+  ? localStorage.getItem("lifePhoto_" + myId)
+  : null;
+
+const photo = document.getElementById("profilePhoto");
 
 if(savedPhoto){
-  const photo = document.getElementById("profilePhoto");
   photo.src = savedPhoto;
   photo.style.display = "inline-block";
+}else{
+  photo.removeAttribute("src");
+  photo.style.display = "none";
 }
 }
 let lastProfileScrollTop = 0;
@@ -2611,9 +2618,14 @@ function changeDPPhoto(event){
       defaultIcon.style.display = "none";
     }
 
-    localStorage.setItem("lifePhoto", e.target.result);
-  };
+    const myId = localStorage.getItem("lifeId");
 
+if(myId){
+  localStorage.setItem(
+    "lifePhoto_" + myId,
+    e.target.result
+  );
+}
   reader.readAsDataURL(file);
 }
   function editProfile(){
