@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Life Voice Chat</title>
 <script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
-<script type="module">
+<script type="module">h
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import {
@@ -124,6 +124,54 @@ window.firebaseReadyCheck = function(){
 >
   Test Firebase
 </button>
+  <button
+  type="button"
+  onclick="checkFirebaseError()"
+  style="
+    position:fixed;
+    top:70px;
+    right:10px;
+    z-index:99999;
+    padding:12px;
+    background:red;
+    color:white;
+    border:0;
+    border-radius:10px;
+  "
+>
+  Check Error
+</button>
+
+<script>
+async function checkFirebaseError(){
+
+  try{
+
+    await import(
+      "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js"
+    );
+
+    await import(
+      "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js"
+    );
+
+    await import(
+      "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js"
+    );
+
+    alert("Firebase files loaded successfully.");
+
+  }catch(error){
+
+    alert(
+      "Firebase loading error:\n\n" +
+      (error.message || error)
+    );
+
+    console.error(error);
+  }
+}
+</script>
 <style>
   #seats .seat{
   width:58px !important;
