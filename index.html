@@ -70,7 +70,11 @@ window.sendPhoneOTP = async function(phone){
 };
 window.saveUserToFirestore = async function(userId, name){
 
-  try {
+  if(!window.db){
+    throw new Error("Firestore database is not initialized.");
+  }
+
+  try{
 
     if(!window.auth.currentUser){
       await signInAnonymously(window.auth);
@@ -87,13 +91,13 @@ window.saveUserToFirestore = async function(userId, name){
       }
     );
 
-    console.log("User saved to Firestore:", userId);
+    console.log("✅ Firestore user saved:", userId);
 
     return true;
 
-  } catch(error) {
+  }catch(error){
 
-    console.error("Firestore save error:", error);
+    console.error("❌ Firestore save error:", error);
 
     throw error;
   }
