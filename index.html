@@ -60,10 +60,13 @@ window.createAccount = async function(){
     document.getElementById("signupPass").value = "";
     document.getElementById("signupConfirm").value = "";
 
-    if(typeof showLogin === "function"){
-      showLogin();
-    }
+    document.getElementById("signupScreen").classList.add("hidden");
+document.getElementById("loginScreen").classList.remove("hidden");
 
+const nav = document.getElementById("bottomNav");
+if(nav){
+  nav.style.display = "none";
+}
   }catch(error){
 
     console.error("Create account error:", error);
