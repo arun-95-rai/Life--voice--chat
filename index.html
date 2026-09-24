@@ -387,19 +387,28 @@ document.getElementById('signupScreen').classList.remove('hidden');
 </p>
   <input id="signupPass" type="password" placeholder="🔒 Password">
   <input id="signupConfirm" type="password" placeholder="🔒 Confirm Password">
+<button
+  type="button"
+  onclick="createAccount();"
+  style="
+    width:100%;
+    padding:14px;
+    margin-top:12px;
+    border:0;
+    border-radius:14px;
+    background:linear-gradient(135deg,#147cff,#d000ff);
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    position:relative;
+    z-index:99999;
+    pointer-events:auto;
+    cursor:pointer;
+  "
+>
+  ✨ Sign Up
+</button>
 
-<button onclick="createAccount()">✨ Sign Up</button>
-
-  <p>Already have an account?</p>
-  <button onclick="showLogin()">Login</button>
-</div>
-<div id="homeScreen" class="card hidden" style="
-padding:0;
-overflow:hidden;
-background:linear-gradient(180deg,#20d7c2 0%,#f7f7f7 30%);
-color:#222;
-min-height:100vh;
-">
 
   <!-- TOP BAR -->
   <div style="
