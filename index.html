@@ -403,7 +403,7 @@ box-sizing:border-box;
 <button
   type="button"
   id="signupButton"
-  onclick="alert('sign up click working');window.createAccount();"
+  onclick="alert('SIGN UP CLICK WORKING'); if(typeof window.createAccount==='function'){window.createAccount();}else{alert('createAccount NOT FOUND');}"
   style="
     width:100%;
     padding:14px;
