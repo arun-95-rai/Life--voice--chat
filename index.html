@@ -1707,7 +1707,9 @@ function backHome(){
 function loginUser(){
   const phone = document.getElementById("loginUser").value.trim();
   const pass = document.getElementById("loginPass").value;
-
+  
+const nav = document.getElementById("bottomNav");
+if(nav) nav.style.display = "flex";
   if(!phone || !pass){
     alert("Please enter Phone Number and Password");
     return;
