@@ -77,6 +77,35 @@ if(nav){
     );
   }
 };
+  <script>
+window.loginUser = function(){
+
+  const phone = document.getElementById("loginUser").value.trim();
+  const pass = document.getElementById("loginPass").value;
+
+  if(!phone || !pass){
+    alert("Please enter Phone Number and Password");
+    return;
+  }
+
+  const savedPhone = localStorage.getItem("lifeUser");
+  const savedPass = localStorage.getItem("lifePass");
+
+  if(phone !== savedPhone || pass !== savedPass){
+    alert("Invalid Phone Number or Password");
+    return;
+  }
+
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("signupScreen").classList.add("hidden");
+  document.getElementById("homeScreen").classList.remove("hidden");
+
+  const nav = document.getElementById("bottomNav");
+  if(nav){
+    nav.style.display = "flex";
+  }
+};
+</script>  
   </script>
 <script type="module">
 
@@ -386,7 +415,7 @@ display:flex;justify-content:space-around;margin:30px 10px
   <input id="loginUser" placeholder="📱 Phone Number / User ID">
   <input id="loginPass" type="password" placeholder="🔒 Password">
 
-  <button onclick="loginUser()">Login</button>
+  <button onclick="window.loginUser()">Login</button>
 
   <p>OR</p>
 
