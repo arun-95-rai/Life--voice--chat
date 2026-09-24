@@ -10,6 +10,71 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Life Voice Chat</title>
 <script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
+  <script>
+window.createAccount = async function(){
+
+  const name = document.getElementById("signupName").value.trim();
+  const phone = document.getElementById("signupPhone").value.trim();
+  const pass = document.getElementById("signupPass").value;
+  const confirm = document.getElementById("signupConfirm").value;
+
+  if(!name || !phone || !pass || !confirm){
+    alert("Please fill all details.");
+    return;
+  }
+
+  if(pass !== confirm){
+    alert("Password does not match.");
+    return;
+  }
+
+  if(pass.length < 6){
+    alert("Password must be at least 6 characters.");
+    return;
+  }
+
+  const userId =
+    Math.floor(10000000 + Math.random() * 90000000).toString();
+
+  try{
+
+    localStorage.setItem("lifeId", userId);
+    localStorage.setItem("lifeName", name);
+    localStorage.setItem("lifeUser", phone);
+    localStorage.setItem("lifePass", pass);
+
+    if(!window.saveUserToFirestore){
+      alert("Firestore function not loaded.");
+      return;
+    }
+
+    await window.saveUserToFirestore(userId, name);
+
+    alert(
+      "Account created successfully!\n\n" +
+      "Your Life ID: " + userId
+    );
+
+    document.getElementById("signupName").value = "";
+    document.getElementById("signupPhone").value = "";
+    document.getElementById("signupPass").value = "";
+    document.getElementById("signupConfirm").value = "";
+
+    if(typeof showLogin === "function"){
+      showLogin();
+    }
+
+  }catch(error){
+
+    console.error("Create account error:", error);
+
+    alert(
+      "Account creation failed.\n\n" +
+      (error.message || error)
+    );
+  }
+};
+  </script>
 <script type="module">
 
 (async function(){
@@ -403,7 +468,7 @@ box-sizing:border-box;
 <button
   type="button"
   id="signupButton"
-  onclick="alert('SIGN UP CLICK WORKING'); if(typeof window.createAccount==='function'){window.createAccount();}else{alert('createAccount NOT FOUND');}"
+  onclick="window.createAccount()"
   style="
     width:100%;
     padding:14px;
