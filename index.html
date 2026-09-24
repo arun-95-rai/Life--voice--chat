@@ -324,7 +324,15 @@ document.getElementById('signupScreen').classList.remove('hidden');
 ✨ Create Account
   </button>
 </div>
-  <div id="signupScreen" class="card hidden">
+  <div id="signupScreen" class="card hidden"
+style="
+position:relative;
+z-index:10000;
+min-height:100vh;
+overflow-y:auto;
+padding-bottom:120px;
+box-sizing:border-box;
+">
   <h2>✨ Create Account</h2>
   <p>Join Life Voice Chat</p>
 
@@ -389,7 +397,8 @@ document.getElementById('signupScreen').classList.remove('hidden');
   <input id="signupConfirm" type="password" placeholder="🔒 Confirm Password">
 <button
   type="button"
-  onclick="createAccount();"
+  id="signupButton"
+  onclick="window.createAccount();"
   style="
     width:100%;
     padding:14px;
@@ -403,7 +412,7 @@ document.getElementById('signupScreen').classList.remove('hidden');
     position:relative;
     z-index:99999;
     pointer-events:auto;
-    cursor:pointer;
+    touch-action:manipulation;
   "
 >
   ✨ Sign Up
