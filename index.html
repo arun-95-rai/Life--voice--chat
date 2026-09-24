@@ -1690,8 +1690,18 @@ function openPrivateChat(name){
   }
     
 function backHome(){
-    document.getElementById("inboxScreen").classList.add("hidden");
-    document.getElementById("homeScreen").classList.remove("hidden");
+
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("signupScreen").classList.add("hidden");
+  document.getElementById("inboxScreen").classList.add("hidden");
+  document.getElementById("profileScreen").classList.add("hidden");
+  document.getElementById("userSearchScreen").classList.add("hidden");
+
+  document.getElementById("homeScreen").classList.remove("hidden");
+
+  const nav = document.getElementById("bottomNav");
+  if(nav) nav.style.display = "flex";
+}
 }
 function loginUser(){
   const phone = document.getElementById("loginUser").value.trim();
@@ -1717,14 +1727,19 @@ function loginUser(){
 
 function showSignup(){
   document.getElementById("loginScreen").classList.add("hidden");
-  document.getElementById("homeScreen").classList.add("hidden");
   document.getElementById("signupScreen").classList.remove("hidden");
+
+  const nav = document.getElementById("bottomNav");
+  if(nav) nav.style.display = "none";
 }
 
 
 function showLogin(){
   document.getElementById("signupScreen").classList.add("hidden");
   document.getElementById("loginScreen").classList.remove("hidden");
+
+  const nav = document.getElementById("bottomNav");
+  if(nav) nav.style.display = "none";
 }
 
 let signupConfirmationResult = null;
