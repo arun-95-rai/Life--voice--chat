@@ -414,10 +414,9 @@ display:flex;justify-content:space-around;margin:30px 10px
   <input id="loginUser" placeholder="📱 Phone Number / User ID">
   <input id="loginPass" type="password" placeholder="🔒 Password">
 
-  <button type="button"
-    onclick="window.loginUser()">
-    Login
-  </button>
+<button type="button" onclick="alert(typeof window.loginUser)">
+  Login
+</button>
 
   <p>OR</p>
 
@@ -1809,7 +1808,6 @@ function backHome(){
 }
 }
 function loginUser(){
-  alert("LOGIN FUNCTION WORKING");
   const phone = document.getElementById("loginUser").value.trim();
   const pass = document.getElementById("loginPass").value;
   
