@@ -415,14 +415,11 @@ display:flex;justify-content:space-around;margin:30px 10px
   <input id="loginUser" placeholder="📱 Phone Number / User ID">
   <input id="loginPass" type="password" placeholder="🔒 Password">
 
-  <button onclick="alert('LOGIN CLICK WORKING'); if(typeof window.loginUser==='function'){window.loginUser();}else{alert('loginUser NOT FOUND');}">Login</button>
+  <button type="button" onclick="loginUser()">Login</button>
 
   <p>OR</p>
 
-  <button type="button" onclick="
-document.getElementById('loginScreen').classList.add('hidden');
-document.getElementById('signupScreen').classList.remove('hidden');
-">
+  <button type="button" onclick="showSignup()">
 ✨ Create Account
   </button>
 </div>
