@@ -230,6 +230,27 @@ window.saveProfileToFirestore = async function(userId, profileData){
 
   return true;
 };
+  // Save a live room to Firebase
+window.saveLiveRoom = async function(roomId, roomName, ownerId, ownerName){
+
+  if(!window.db){
+    throw new Error("Firebase database is not ready.");
+  }
+
+  await setDoc(
+    doc(window.db, "rooms", roomId),
+    {
+      roomId: roomId,
+      roomName: roomName,
+      ownerId: ownerId,
+      ownerName: ownerName,
+      active: true,
+      updatedAt: Date.now()
+    }
+  );
+
+  return true;
+};
     window.sendPhoneOTP = async function(phone){
 
       const verifier =
