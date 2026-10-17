@@ -2990,7 +2990,14 @@ peer.on("open",()=>{
 info.textContent="Room: "+room;
 
 msg("🟢 Room created. Waiting for another user...");
+const ownerId = localStorage.getItem("lifeId") || "";
+const ownerName = localStorage.getItem("lifeName") || myName;
+const roomId = "life-room-" + room.toLowerCase().replace(/[^a-z0-9_-]/g, "");
 
+if (window.saveLiveRoom && ownerId) {
+  window.saveLiveRoom(roomId, "DATA CENTER AVAILABLE", ownerId, ownerName)
+    .catch(error => console.error("Room save error:", error));
+}
 addUser(myName);
 showControls();
 document.getElementById("joinPanel").classList.add("hidden");
