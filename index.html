@@ -2701,7 +2701,7 @@ const profileActions = document.getElementById("profileActions");
 
 const profileId = document.getElementById("profileId").textContent.trim();
 
-if(myId === profileId){
+if(localStorage.getItem("lifeId") === profileId){
   profileActions.style.display = "none";
 }else{
   profileActions.style.display = "flex";
@@ -2711,7 +2711,7 @@ if(profileScreen && profileActions){
   profileScreen.addEventListener("scroll", function(){
 
     const currentTop = profileScreen.scrollTop;
-if(myId === profileId){
+if(localStorage.getItem("lifeId") === profileId){
   profileActions.style.display = "none";
   return;
 }
