@@ -1805,7 +1805,8 @@ function backHome(){
   if(nav) nav.style.display = "flex";
 }
 }
-function loginUser(){
+window.loginUser = function(){
+    alert("LOGIN BUTTON WORKING");
 
   const phone = document.getElementById("loginUser").value.trim();
   const pass = document.getElementById("loginPass").value;
