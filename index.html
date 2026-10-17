@@ -1907,6 +1907,7 @@ window.loginUser = function(){
 
   document.getElementById("loginScreen").classList.add("hidden");
   document.getElementById("homeScreen").classList.remove("hidden");
+  if(window.loadLiveRooms) window.loadLiveRooms();
   const nav = document.getElementById("bottomNav");
 if(nav) nav.style.display = "flex";
 }
