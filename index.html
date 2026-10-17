@@ -248,7 +248,62 @@ window.saveLiveRoom = async function(roomId, roomName, ownerId, ownerName){
       updatedAt: Date.now()
     }
   );
+// Display active rooms on Home Screen
+window.loadLiveRooms = function(){
 
+  if(!window.db) return;
+
+  const roomsRef = collection(window.db, "rooms");
+
+  onSnapshot(roomsRef, function(snapshot){
+
+    const list = document.getElementById("liveRoomsList");
+    if(!list) return;
+
+    list.innerHTML = "";
+
+    const activeRooms = snapshot.docs.filter(
+      item => item.data().active === true
+    );
+
+    if(activeRooms.length === 0){
+      list.innerHTML =
+        '<div style="padding:20px;color:#777;grid-column:1/-1;">🔎 No live rooms yet</div>';
+      return;
+    }
+
+    activeRooms.forEach(item => {
+
+      const room = item.data();
+
+      const card = document.createElement("button");
+      card.type = "button";
+      card.style.cssText =
+        "padding:18px 10px;border-radius:16px;background:#24104f;color:white;border:0;width:100%;";
+
+      card.innerHTML =
+        "🎙️ " + room.roomName +
+        "<br><small>👑 " + room.ownerName +
+        "</small><br><small>ID: " + room.roomId +
+        "</small><br><b>Join Room</b>";
+
+      card.onclick = function(){
+        document.getElementById("homeScreen").classList.add("hidden");
+        document.getElementById("roomScreen").classList.remove("hidden");
+
+        document.getElementById("name").value =
+          localStorage.getItem("lifeName") || "User";
+
+        document.getElementById("room").value = room.roomId;
+
+        join();
+      };
+
+      list.appendChild(card);
+    });
+
+  });
+};
   return true;
 };
     window.sendPhoneOTP = async function(phone){
