@@ -1798,7 +1798,10 @@ function backHome(){
   document.getElementById("signupScreen").classList.add("hidden");
   document.getElementById("inboxScreen").classList.add("hidden");
   document.getElementById("profileScreen").classList.add("hidden");
-  document.getElementById("userSearchScreen").classList.add("hidden");
+  const searchScreen = document.getElementById("userSearchScreen");
+if(searchScreen) searchScreen.classList.add("hidden");
+const searchOverlay = document.getElementById("userSearchOverlay");
+if(searchOverlay) searchOverlay.remove();
 
   document.getElementById("homeScreen").classList.remove("hidden");
 
