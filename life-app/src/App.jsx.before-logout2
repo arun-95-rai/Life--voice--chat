@@ -1,0 +1,170 @@
+import { useState } from 'react';
+import './App.css';
+import { auth, db } from './lib/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useEffect } from 'react';
+import Login from './Login';
+
+export default function App() {
+  const [user, setUser] = useState(auth.currentUser);
+  useEffect(() => onAuthStateChanged(auth, setUser), []);
+  const [page, setPage] = useState('Home');
+const [seatCount, setSeatCount] = useState(10);
+const [seatChoice, setSeatChoice] = useState(10);
+  const [mySeat, setMySeat] = useState(null);
+  const [occupiedSeats, setOccupiedSeats] = useState({});
+  const [lockedSeats, setLockedSeats] = useState([]);
+  const [selectedSeat, setSelectedSeat] = useState(null);
+
+  const chooseSeat = (n) => {
+    if (lockedSeats.includes(n)) return;
+    if (occupiedSeats[n] && occupiedSeats[n] !== 'You') return;
+    setOccupiedSeats(prev => {
+      const next = { ...prev };
+      if (mySeat !== null) delete next[mySeat];
+      next[n] = 'You';
+      return next;
+    });
+    setMySeat(n);
+  };
+  const rooms = [
+    { id: '10510566', name: 'Life Friends' },
+    { id: '10510567', name: 'Music & Masti' },
+    { id: '10510568', name: 'Friendship Zone' },
+  ];
+
+  if (!user) return <Login onLogin={() => setUser(auth.currentUser)} />;
+
+  return (
+    <div className="app">
+     
+      <header className="topbar">
+        <h2>🎙️ LIFE VOICE CHAT</h2>
+        <button onClick={() => setPage('Profile')}>👤 Profile</button>
+      </header>
+
+      {page === 'Home' && (
+        <main>
+          <section className="welcome">
+            <h1>Welcome to Life ❤️</h1>
+            <p>Connect • Talk • Make Friends</p>
+            <button onClick={() => setPage('Inbox')}>💬 Open Inbox</button>
+          </section>
+          <h2>🔥 Live Voice Rooms</h2>
+      <div className="seat-selector">
+  <label>Choose Seats: </label>
+  <select
+    value={seatChoice}
+    onChange={(e) => {
+      const count = Number(e.target.value);
+      setSeatChoice(count);
+      setSeatCount(count);
+    }}
+  >
+    {Array.from({ length: 11 }, (_, i) => i + 10).map(n => (
+      <option key={n} value={n}>{n} Seats</option>
+    ))}
+  </select>
+</div>
+          {rooms.map(room => (
+            <article className="room" key={room.id}>
+              <div>
+                <h3>🎤 {room.name}</h3>
+                <p>Room ID: {room.id}</p>
+              </div>
+              <button onClick={() => setPage(room.name)}>Join Room</button>
+            </article>
+          ))}
+        </main>
+      )}
+
+      {page === 'Inbox' && (
+        <main className="panel">
+          <h2>💬 Private Inbox</h2>
+          <p>Private messages will appear here.</p>
+        </main>
+      )}
+
+      {page === 'Profile' && (
+        <main className="panel">
+          <h2>👤 My Profile</h2>
+          <p>Name: LLifer</p>
+          <p>ID: Generated after account setup</p>
+        </main>
+      )}
+
+      {rooms.map(room => page === room.name && (
+        <main className="panel" key={room.id}>
+          <h2>🎙️ {room.name}</h2>
+          <p>Room ID: {room.id}</p>
+          <div className="seats">
+          {Array.from({ length: seatCount }, (_, i) => i + 1).map(n => (
+              <div className="seat-wrap" key={n}>
+              <button type="button" className="seat"
+                onClick={() => setSelectedSeat(n)}
+                disabled={Boolean(occupiedSeats[n] && occupiedSeats[n] !== 'You')}
+                style={{ opacity: lockedSeats.includes(n) ? 0.45 : 1, outline: mySeat === n ? '3px solid #20e3a2' : 'none' }}>
+                <span className="seat-avatar">{lockedSeats.includes(n) ? '🔒' : occupiedSeats[n] ? '👤' : '➕'}</span>
+              </button>
+              <small className="seat-name">{occupiedSeats[n] || `Seat ${n}`}{mySeat === n ? ' (You)' : ''}</small>
+            </div>
+            ))}
+          </div>
+          {selectedSeat !== null && (
+          <section className="seat-menu">
+            <h3>Seat {selectedSeat}</h3>
+
+            <button type="button" onClick={() => {
+              alert('Invite User: user list will be connected later.');
+              setSelectedSeat(null);
+            }}>Invite</button>
+
+            {lockedSeats.includes(selectedSeat) ? (
+              <button type="button" onClick={() => {
+                setLockedSeats(prev => prev.filter(n => n !== selectedSeat));
+                setSelectedSeat(null);
+              }}>Unlock</button>
+            ) : (
+              <>
+                <button type="button" onClick={() => {
+                  setLockedSeats(prev => [...prev, selectedSeat]);
+                  setSelectedSeat(null);
+                }}>Lock</button>
+
+                <button type="button" onClick={() => {
+                  if (!occupiedSeats[selectedSeat]) {
+                    chooseSeat(selectedSeat);
+                  } else {
+                    alert('This seat is occupied.');
+                  }
+                  setSelectedSeat(null);
+                }}>Take Seat</button>
+
+                <button type="button" onClick={() => {
+                  if (mySeat !== null && mySeat !== selectedSeat && !occupiedSeats[selectedSeat]) {
+                    chooseSeat(selectedSeat);
+                  } else {
+                    alert('Choose another empty seat to switch.');
+                  }
+                  setSelectedSeat(null);
+                }}>Switch</button>
+              </>
+            )}
+
+            <button type="button" onClick={() => setSelectedSeat(null)}>Close</button>
+          </section>
+        )}
+        <p>Live voice calling will be added later.</p>
+        </main>
+      ))}
+
+      <nav className="bottom-nav">
+        <button onClick={() => setPage('Home')}>🏠 Home</button>
+        <button onClick={() => setPage('Inbox')}>💬 Inbox</button>
+        <button onClick={() => setPage('Profile')}>👤 Profile</button>
+      </nav>
+    </div>
+  );
+}
+
+

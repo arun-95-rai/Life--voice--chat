@@ -1,0 +1,90 @@
+{
+  "hash": "aae5eaf2",
+  "configHash": "cbeb7a2f",
+  "lockfileHash": "431a3d25",
+  "browserHash": "87a88ec9",
+  "optimized": {
+    "@capacitor-firebase/authentication": {
+      "src": "../../@capacitor-firebase/authentication/dist/esm/index.js",
+      "file": "@capacitor-firebase_authentication.js",
+      "fileHash": "444d0c0b",
+      "needsInterop": false
+    },
+    "@capacitor/core": {
+      "src": "../../@capacitor/core/dist/index.js",
+      "file": "@capacitor_core.js",
+      "fileHash": "3fa156bb",
+      "needsInterop": false
+    },
+    "firebase/app": {
+      "src": "../../firebase/app/dist/esm/index.esm.js",
+      "file": "firebase_app.js",
+      "fileHash": "bccd3c80",
+      "needsInterop": false
+    },
+    "firebase/auth": {
+      "src": "../../firebase/auth/dist/esm/index.esm.js",
+      "file": "firebase_auth.js",
+      "fileHash": "8aa8761f",
+      "needsInterop": false
+    },
+    "firebase/firestore": {
+      "src": "../../firebase/firestore/dist/esm/index.esm.js",
+      "file": "firebase_firestore.js",
+      "fileHash": "a5b0b105",
+      "needsInterop": false
+    },
+    "react-dom": {
+      "src": "../../react-dom/index.js",
+      "file": "react-dom.js",
+      "fileHash": "91a144f7",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "d097b878",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../react/index.js",
+      "file": "react.js",
+      "fileHash": "3308d034",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "c7217b2b",
+      "needsInterop": true
+    },
+    "react/jsx-runtime": {
+      "src": "../../react/jsx-runtime.js",
+      "file": "react_jsx-runtime.js",
+      "fileHash": "29c8032c",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "index.esm-CfGdhCLs": {
+      "file": "index.esm-CfGdhCLs.js",
+      "isDynamicEntry": false
+    },
+    "index.esm-DeFbVsNs": {
+      "file": "index.esm-DeFbVsNs.js",
+      "isDynamicEntry": false
+    },
+    "react-DPKsgqat": {
+      "file": "react-DPKsgqat.js",
+      "isDynamicEntry": false
+    },
+    "react-dom-CdETjqJa": {
+      "file": "react-dom-CdETjqJa.js",
+      "isDynamicEntry": false
+    },
+    "web-DfSUXq9q": {
+      "file": "web-DfSUXq9q.js",
+      "isDynamicEntry": true
+    }
+  }
+}

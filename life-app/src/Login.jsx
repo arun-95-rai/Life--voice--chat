@@ -1,0 +1,93 @@
+import { useState } from 'react';
+import {
+  googleLogin,
+  setupRecaptcha,
+  phoneLogin
+} from './lib/auth';
+
+export default function Login({ onLogin }) {
+  const [phone, setPhone] = useState('+91');
+  const [otp, setOtp] = useState('');
+  const [confirmation, setConfirmation] = useState(null);
+  const [message, setMessage] = useState('');
+  const [busy, setBusy] = useState(false);
+
+  const google = async () => {
+    try {
+      setBusy(true);
+      await googleLogin();
+      onLogin();
+    } catch (e) {
+      setMessage(e.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const sendOtp = async () => {
+    try {
+      setBusy(true);
+      const verifier = setupRecaptcha('recaptcha-container');
+      const result = await phoneLogin(phone, verifier);
+      setConfirmation(result);
+      setMessage('OTP sent. Enter the code received on your phone.');
+    } catch (e) {
+      setMessage(e.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const verifyOtp = async () => {
+    try {
+      setBusy(true);
+      await confirmation.confirm(otp);
+      onLogin();
+    } catch (e) {
+      setMessage('OTP verification failed. Please check the code.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <main className="panel">
+
+      <button type="button" disabled={busy} onClick={google}>
+        Continue with Google
+      </button>
+
+      <hr />
+
+      <label htmlFor="phone">Mobile number with country code</label>
+      <input
+        id="phone"
+        value={phone}
+        onChange={e => setPhone(e.target.value)}
+        placeholder="+919876543210"
+      />
+
+      <div id="recaptcha-container"></div>
+
+      {!confirmation ? (
+        <button type="button" disabled={busy} onClick={sendOtp}>
+          Send OTP
+        </button>
+      ) : (
+        <>
+          <input
+            value={otp}
+            onChange={e => setOtp(e.target.value)}
+            placeholder="Enter OTP"
+            inputMode="numeric"
+          />
+          <button type="button" disabled={busy} onClick={verifyOtp}>
+            Verify OTP
+          </button>
+        </>
+      )}
+
+      {message && <p>{message}</p>}
+    </main>
+  );
+}

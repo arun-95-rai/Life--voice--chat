@@ -1,0 +1,317 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #100d20;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  max-width: 600px;
+  min-height: 100vh;
+  margin: auto;
+  padding-bottom: 85px;
+  background: linear-gradient(160deg, #21103c, #100d20);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #24123d;
+  border-bottom: 1px solid #593a78;
+}
+
+.topbar h2 {
+  font-size: 17px;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 11px 14px;
+  background: #a83cff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.welcome {
+  margin: 16px;
+  padding: 24px 16px;
+  text-align: center;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #842cff, #ed3c9c);
+}
+
+.welcome h1 {
+  font-size: 26px;
+}
+
+main > h2 {
+  margin: 20px 16px 12px;
+}
+
+.room {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 12px;
+  padding: 15px;
+  border-radius: 16px;
+  background: #281b3b;
+  border: 1px solid #49315f;
+}
+
+.room h3 {
+  margin: 0 0 8px;
+}
+
+.room p {
+  margin: 5px 0;
+  color: #d7c8e8;
+  font-size: 13px;
+}
+
+.panel {
+  padding: 20px;
+}
+
+.seats{
+  display: grid;
+  grid-template-columns: repeat(5,minmax(0,  1fr));
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.seat small {
+  font-size: 11px;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 5px;
+  background: #211331;
+  border-top: 1px solid #593a78;
+}
+
+.bottom-nav button {
+  background: transparent;
+  font-size: 13px;
+}
+
+@media (max-width: 380px) {
+  .room {
+    flex-wrap: wrap;
+  }
+
+  .welcome h1 {
+    font-size: 22px;
+  }
+}
+.seat {
+    width: 48px;
+      height: 48px;
+        border-radius: 50%;
+          background: #281b3b;
+            border: 2px solid #a83cff;
+              display: flex;
+                align-items: center;
+                  justify-content: center;
+                    margin: auto;
+                      overflow: hidden;
+                        color: white;
+                          font-size: 10px;
+                            text-align: center;
+                            }
+
+                            .seat small {
+                              font-size: 9px;
+                              }
+
+/* Seat options popup */
+.seat-menu {
+  position: relative;
+  width: fit-content;
+  min-width: 145px;
+  margin: 12px auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #292438;
+  border: 1px solid #655477;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  z-index: 20;
+}
+
+.seat-menu h3 {
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.seat-menu button {
+  width: 100%;
+  padding: 10px;
+  border: 0;
+  border-radius: 7px;
+  background: #393248;
+  color: white;
+  text-align: left;
+  font-size: 14px;
+}
+.seat-avatar {
+    width: 48px;
+      height: 48px;
+        border-radius: 50%;
+          overflow: hidden;
+            display: flex;
+              align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                }
+
+                .seat-photo {
+                  width: 100%;
+                    height: 100%;
+                      border-radius: 50%;
+                        object-fit: cover;
+                        object-position: center;
+                          display: block;
+                          }
+.login-brand {
+    text-align: center;
+      margin: 10px auto 24px;
+      }
+
+      .login-brand img {
+        width: 180px;
+          height: 180px;
+            object-fit: contain;
+              display: block;
+                margin: 0 auto 10px;
+                }
+
+                .login-brand h1 {
+                  font-size: 28px;
+                    font-weight: 800;
+                      margin: 8px 0 12px;
+                        color: #ffffff;
+                          text-shadow: 0 0 12px #c026ff;
+                          }
+
+                          .login-brand p {
+                            font-size: 18px;
+                              font-weight: 600;
+                                margin: 5px 0;
+                                  color: #f2d7ff;
+                                  }
+/* Life Voice Chat - Colorful Login Background */
+.login-brand {
+  text-align: center;
+    margin: 10px auto 24px;
+    }
+
+    main.panel:has(.login-brand) {
+  background-image:
+    linear-gradient(rgba(10, 4, 25, 0.15), rgba(10, 4, 25, 0.25)),
+    url("/login-bg.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+                        border: 1px solid rgba(192, 120, 255, 0.35);
+                          border-radius: 24px;
+                            box-shadow:
+                                0 0 30px rgba(150, 50, 255, 0.22),
+                                    inset 0 0 35px rgba(100, 50, 255, 0.08);
+                                      padding: 24px 18px;
+                                        overflow: hidden;
+                                        }
+
+                                        .login-brand img {
+                                          width: 180px;
+                                            height: 180px;
+                                              object-fit: contain;
+                                                display: block;
+                                                  margin: 0 auto 10px;
+                                                    filter: drop-shadow(0 0 14px rgba(210, 60, 255, 0.65));
+                                                    }
+
+                                                    .login-brand h1 {
+                                                      font-size: 28px;
+                                                        font-weight: 800;
+                                                          margin: 8px 0 12px;
+                                                            color: #fff;
+                                                              text-shadow: 0 0 12px #c026ff;
+                                                              }
+
+                                                              .login-brand p {
+                                                                font-size: 18px;
+                                                                  font-weight: 600;
+                                                                    margin: 8px 0;
+                                                                      color: #f2d7ff;
+                                                                      }
+                                                                      /* LIFE VOICE CHAT LOGIN BACKGROUND */
+
+                                                                      main.panel {
+                                                                        width: 100%;
+                                                                          min-height: 100vh;
+                                                                            min-height: 100dvh;
+                                                                              box-sizing: border-box;
+                                                                                margin: 0;
+                                                                                  padding: 24px 18px;
+
+                                                                                    position: relative;
+                                                                                      overflow-x: hidden;
+
+                                                                                        background-image:
+                                                                                            linear-gradient(
+                                                                                                  rgba(10, 4, 25, 0.15),
+                                                                                                        rgba(10, 4, 25, 0.25)
+                                                                                                            ),
+                                                                                                                url("/login-bg.png");
+
+                                                                                                                  background-size: cover;
+                                                                                                                    background-position: center center;
+                                                                                                                      background-repeat: no-repeat;
+
+                                                                                                                        display: flex;
+                                                                                                                          flex-direction: column;
+                                                                                                                            align-items: center;
+                                                                                                                              justify-content: center;
+
+                                                                                                                                text-align: center;
+                                                                                                                                  color: #ffffff;
+                                                                                                                                    border-radius: 0;
+                                                                                                                                    }
+
+                                                                                                                                    main.panel > * {
+                                                                                                                                      position: relative;
+                                                                                                                                        z-index: 1;
+                                                                                                                                        }
+                                                                                                                                        /* Life Voice Chat background image */
+                                                                                                                                        main.panel {
+                                                                                                                                          background-image:
+                                                                                                                                              linear-gradient(rgba(10, 4, 25, 0.12), rgba(10, 4, 25, 0.12)),
+                                                                                                                                                  url("/login-bg.png") !important;
+                                                                                                                                                    background-size: cover !important;
+                                                                                                                                                      background-position: center center !important;
+                                                                                                                                                        background-repeat: no-repeat !important;
+                                                                                                                                                          min-height: 100vh;
+                                                                                                                                                            min-height: 100dvh;
+                                                                                                                                                              width: 100%;
+                                                                                                                                                                box-sizing: border-box;
+                                                                                                                                                                }

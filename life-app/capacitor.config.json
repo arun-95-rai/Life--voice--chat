@@ -1,0 +1,13 @@
+{
+  "appId": "com.lifevoice.chat",
+  "appName": "Life Voice Chat",
+  "webDir": "dist",
+  "plugins": {
+    "FirebaseAuthentication": {
+      "providers": [
+        "google.com",
+        "phone"
+      ]
+    }
+  }
+}

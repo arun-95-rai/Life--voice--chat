@@ -1,0 +1,32 @@
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  onAuthStateChanged,
+  signOut
+} from "firebase/auth";
+import { auth } from "./firebase";
+
+export const googleLogin = () => {
+  const provider = new GoogleAuthProvider();
+  return signInWithPopup(auth, provider);
+};
+
+export const setupRecaptcha = (elementId) => {
+  if (window.recaptchaVerifier) {
+    return window.recaptchaVerifier;
+  }
+
+  window.recaptchaVerifier = new RecaptchaVerifier(auth, elementId, {
+    size: "normal"
+  });
+
+  return window.recaptchaVerifier;
+};
+
+export const phoneLogin = (phoneNumber, verifier) => {
+  return signInWithPhoneNumber(auth, phoneNumber, verifier);
+};
+
+export { auth, onAuthStateChanged, signOut };
