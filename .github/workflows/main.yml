@@ -1,0 +1,26 @@
+name: Build Life Voice Chat
+
+on:
+workflow_dispatch:
+
+jobs:
+build:
+runs-on: ubuntu-latest
+steps:
+- name: Checkout repository
+uses: actions/checkout@v4
+with:
+ref: codespace-bug-free-tribble-gxrxx6rig9vcwx5v
+
+  - name: Setup Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: 20
+
+  - name: Install dependencies
+    working-directory: life-app
+    run: npm ci
+
+  - name: Build app
+    working-directory: life-app
+    run: npm run build
