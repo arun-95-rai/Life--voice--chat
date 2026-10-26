@@ -8,9 +8,9 @@ build:
 runs-on: ubuntu-latest
 steps:
 - name: Checkout repository
-uses: actions/checkout@v4
-with:
-ref: codespace-bug-free-tribble-gxrxx6rig9vcwx5v
+  uses: actions/checkout@v4
+  with:
+    ref: codespace-bug-free-tribble-gxrxx6rig9vcwx5v
 
   - name: Setup Node.js
     uses: actions/setup-node@v4
