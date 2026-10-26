@@ -410,3 +410,155 @@ main.panel > button:not(:first-of-type) {
   min-height: 44px !important;
   font-size: 15px !important;
 }
+/* LIFE VOICE CHAT HOME PAGE */
+.home-screen {
+padding: 12px;
+padding-bottom: 90px;
+color: #ffffff;
+min-height: 100vh;
+background: linear-gradient(180deg, #20102f, #10121e);
+}
+
+.home-top {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 6px;
+overflow-x: auto;
+padding: 8px 0 14px;
+}
+
+.home-top button,
+.home-categories button {
+border: 0;
+border-radius: 18px;
+padding: 9px 12px;
+background: #302541;
+color: white;
+white-space: nowrap;
+font-size: 12px;
+}
+
+.home-welcome {
+padding: 18px 14px;
+border-radius: 18px;
+background: linear-gradient(120deg, #823cff, #ef3b89);
+margin-bottom: 14px;
+}
+
+.home-welcome h2 {
+margin: 0 0 8px;
+font-size: 21px;
+}
+
+.home-welcome p {
+margin: 0;
+font-size: 13px;
+}
+
+.home-top-rooms {
+padding: 14px;
+margin-bottom: 14px;
+border-radius: 16px;
+background: #28213a;
+}
+
+.home-top-rooms h3,
+.home-top-rooms p {
+margin: 4px 0;
+}
+
+.home-categories {
+display: flex;
+gap: 7px;
+overflow-x: auto;
+padding: 5px 0 15px;
+}
+
+.home-seat-setting {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 8px;
+margin-bottom: 16px;
+}
+
+.home-seat-setting select {
+padding: 8px;
+border-radius: 9px;
+max-width: 130px;
+}
+
+.home-section-title {
+margin: 12px 0;
+font-size: 18px;
+}
+
+.home-room-grid {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 12px;
+}
+
+.home-room-card {
+min-width: 0;
+overflow: hidden;
+border-radius: 15px;
+background: #292238;
+border: 1px solid #49375d;
+}
+
+.home-room-cover {
+height: 85px;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 35px;
+background: linear-gradient(135deg, #6434a0, #e34491);
+}
+
+.home-room-info {
+padding: 10px;
+}
+
+.home-room-info h4 {
+margin: 0 0 7px;
+font-size: 14px;
+overflow-wrap: anywhere;
+}
+
+.home-room-info p {
+margin: 0 0 10px;
+font-size: 11px;
+overflow-wrap: anywhere;
+}
+
+.home-join,
+.home-inbox-button {
+width: 100%;
+padding: 10px;
+border: 0;
+border-radius: 10px;
+background: #ec3d91;
+color: white;
+font-weight: bold;
+}
+
+.home-inbox-button {
+margin-top: 16px;
+}
+
+@media (max-width: 360px) {
+.home-room-grid {
+gap: 8px;
+}
+
+.home-room-info {
+padding: 7px;
+}
+
+.home-top button,
+.home-categories button {
+padding: 8px;
+}
+}
