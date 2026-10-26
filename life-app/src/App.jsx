@@ -257,16 +257,43 @@ const [seatChoice, setSeatChoice] = useState(10);
           }}>Logout</button>
       </header>
 
-      {page === 'Home' && (
-        <main>
-          <section className="welcome">
-            <h1>Welcome to Life ❤️</h1>
-            <p>Connect • Talk • Make Friends</p>
-            <button onClick={() => setPage('Inbox')}>💬 Open Inbox</button>
-          </section>
-          <h2>🔥 Live Voice Rooms</h2>
-      <div className="seat-selector">
-  <label>Choose Seats: </label>
+     {page === 'Home' && (
+
+  <main className="home-screen"><header className="home-top">
+  <button onClick={() => setPage('Profile')}>
+    👤 Mine
+  </button>
+
+  <button>✨ Recommend</button>
+  <button>🔥 Hot</button>
+
+  <button onClick={() => setPage('Inbox')}>
+    💬
+  </button>
+</header>
+
+<section className="home-welcome">
+  <h2>❤️ LIFE VOICE CHAT</h2>
+  <p>Connect • Talk • Make Friends</p>
+</section>
+
+<section className="home-top-rooms">
+  <h3>🏆 Top Live Rooms</h3>
+  <p>Discover people and join the conversation!</p>
+</section>
+
+<section className="home-categories">
+  <button>🇮🇳 India</button>
+  <button>🌎 All</button>
+  <button>👨‍👩‍👧 Family</button>
+  <button>🤝 Friends</button>
+  <button>🎵 Sing</button>
+  <button>❤️ Love</button>
+</section>
+
+<section className="home-seat-setting">
+  <label>🎤 Choose Room Seats: </label>
+
   <select
     value={seatChoice}
     onChange={(e) => {
@@ -279,18 +306,40 @@ const [seatChoice, setSeatChoice] = useState(10);
       <option key={n} value={n}>{n} Seats</option>
     ))}
   </select>
-</div>
-          {rooms.map(room => (
-            <article className="room" key={room.id}>
-              <div>
-                <h3>🎤 {room.name}</h3>
-                <p>Room ID: {room.id}</p>
-              </div>
-              <button onClick={() => setPage(room.name)}>Join Room</button>
-            </article>
-          ))}
-        </main>
-      )}
+</section>
+
+<h3 className="home-section-title">🔥 Live Voice Rooms</h3>
+
+<section className="home-room-grid">
+  {rooms.map(room => (
+    <article className="home-room-card" key={room.id}>
+      <div className="home-room-cover">
+        🎤
+      </div>
+
+      <div className="home-room-info">
+        <h4>{room.name}</h4>
+        <p>🆔 Room ID: {room.id}</p>
+        <button
+          className="home-join"
+          onClick={() => setPage(room.name)}
+        >
+          Join Room
+        </button>
+      </div>
+    </article>
+  ))}
+</section>
+
+<button
+  className="home-inbox-button"
+  onClick={() => setPage('Inbox')}
+>
+  💬 Open Messages
+</button>
+
+  </main>
+)}
 
       {page === 'Inbox' && (
         <main className="panel">
