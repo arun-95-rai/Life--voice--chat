@@ -1,49 +1,49 @@
 name: Build Life Voice Chat APK
 
 on:
-workflow_dispatch:
+ workflow_dispatch:
 
 permissions:
-contents: read
+ contents: read
 
 jobs:
-build-apk:
-runs-on: ubuntu-latest
+ build-apk:
+  runs-on: ubuntu-latest
 
 steps:
-  - name: Checkout code
+   - name: Checkout code
     uses: actions/checkout@v4
 
-  - name: Setup Node.js
+   - name: Setup Node.js
     uses: actions/setup-node@v4
     with:
       node-version: 22
 
-  - name: Setup Java
+   - name: Setup Java
     uses: actions/setup-java@v4
     with:
       distribution: temurin
       java-version: 21
 
-  - name: Install dependencies
+   - name: Install dependencies
     working-directory: life-app
     run: npm ci
 
-  - name: Build web app
+   - name: Build web app
     working-directory: life-app
     run: npm run build
 
-  - name: Prepare Android project
+   - name: Prepare Android project
     working-directory: life-app
     run: npx cap sync android
 
-  - name: Build APK
+   - name: Build APK
     working-directory: life-app/android
     run: |
       chmod +x gradlew
       ./gradlew assembleDebug
 
-  - name: Upload APK
+   - name: Upload APK
     uses: actions/upload-artifact@v4
     with:
       name: Life-Voice-Chat-APK
