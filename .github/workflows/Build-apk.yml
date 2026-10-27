@@ -39,11 +39,17 @@ jobs:
         working-directory: life-app
         run: npx cap sync android
 
-      - name: Build APK
+      - name: Build APK and show fingerprints
         working-directory: life-app/android
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug
+          echo "=== DEBUG CERTIFICATE FINGERPRINTS ==="
+          keytool -list -v \
+            -keystore "$HOME/.android/debug.keystore" \
+            -alias androiddebugkey \
+            -storepass android \
+            -keypass android
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
