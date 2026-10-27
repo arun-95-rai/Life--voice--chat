@@ -562,3 +562,43 @@ padding: 7px;
 padding: 8px;
 }
 }
+/* Mobile screen responsive fix */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  -webkit-text-size-adjust: 100%;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
+@media (max-width: 600px) {
+  .home-screen,
+  .login-screen,
+  .profile-screen,
+  .inbox-screen,
+  .room-screen {
+    width: 100%;
+    max-width: 100vw;
+  }
+}
